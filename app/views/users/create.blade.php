@@ -21,6 +21,8 @@ $(function(){
 		},function(data){
 			var obj = $.parseJSON(data);
 			state.token = obj.token
+		}).fail(function(){
+			alert('fail');
 		});
 		e.preventDefault();
 	});
