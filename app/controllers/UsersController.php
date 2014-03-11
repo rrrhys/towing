@@ -21,7 +21,8 @@ class UsersController extends \BaseController {
 	public function create()
 	{
 		//
-		return View::make('users.create');
+		$user = new User;
+		return View::make('users.create')->with('user',$user);
 	}
 
 	/**
@@ -32,6 +33,9 @@ class UsersController extends \BaseController {
 	public function store()
 	{
 		//
+		$user = User::create(Input::all());
+		$user->save();
+		return $user->toJson();
 	}
 
 	/**
