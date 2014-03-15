@@ -22,13 +22,13 @@ class CreateJobsTable extends Migration {
 			$table->string('vehicle_model');
 			$table->integer('pickup_postcode');
 			$table->integer('dropoff_postcode');
-			$table->integer('pickup_address_id');
-			$table->integer('dropoff_address_id');
+			$table->integer('pickup_address_id')->nullable();
+			$table->integer('dropoff_address_id')->nullable();
 			$table->timestamp('started_at');
 			$table->timestamp('finishes_at');
-			$table->timestamp('pickup_at');
-			$table->timestamp('dropoff_at');
-			$table->decimal('current_bid');
+			$table->timestamp('pickup_at')->nullable();
+			$table->timestamp('dropoff_at')->nullable();
+			$table->decimal('current_bid')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
         });

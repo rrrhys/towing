@@ -4,8 +4,8 @@ class Job extends \Eloquent {
 	protected $table = "jobs";
 	protected $softDelete = true;
 	protected $hidden = [];
-    protected $fillable = [];
-    protected $appends = array('finished');
+    protected $fillable = ['job_type_id','job_number','vehicle_make','vehicle_model','pickup_postcode','dropoff_postcode','pickup_address_id','dropoff_address_id','started_at','finishes_at','pickup_at','dropoff_at'];
+    protected $appends = array('finished','lowest_bid');
 
     public function job_type(){
     	return $this->hasOne('JobType','job_type_id');
@@ -17,7 +17,7 @@ class Job extends \Eloquent {
     	return $this->hasOne('User','top_user_id','id');
     }
  	public function bids(){
-		return $this->hasMany('Bid','job_id','id');
+		return $this->hasMany('Bid','job_id','id')->orderBy('amount','asc');
 	}
 
 	public function getDates()
@@ -29,21 +29,30 @@ class Job extends \Eloquent {
     {
         return $this->finishes_at < Carbon::now();
     }
+    public function getLowestBidAttribute(){
+        return $this->bids()->orderBy('amount','asc')->first();
+    }
 
     public function addBid($amount, $user){
-        $bid = Bid::create();
-        $bid->amount = $amount;
-        $bid->user_id = $user->id;
-        $lowestCurrentBid = $this->bids()->orderBy('amount','asc')->first();
-        if($lowestCurrentBid){
-            if($lowestCurrentBid->amount > $bid->amount){
-                $lowestCurrentBid->is_winning = false;
-                $bid->is_winning = true;
-                $lowestCurrentBid->save();
-                $this->current_bid = $bid->amount;
+        if($this->finished){
+            return false;
+        }else
+        {
+            $bid = Bid::create(array('amount'=>$amount, 'user_id'=>$user->id, 'job_id'=>$this->id));
+            
+            $lowestCurrentBid = $this->bids()->orderBy('amount','asc')->first();
+     
+            if($bid->id != $lowestCurrentBid->id){
+                //invalid, too high.
+                $bid->delete();
             }
+
+
+            $this->current_bid =$lowestCurrentBid->amount;
+            $this->save();            
         }
-        $bid->save();
+
+
     }
 
 }

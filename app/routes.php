@@ -37,7 +37,8 @@ Route::post('/admin/users/list', 			array('before'=>'auth.admin','uses'=>'AdminC
 Route::get('/jobs/my', array('as'=>'jobs.my','before'=>'auth.is_lister', 'uses'=>'JobsController@my'));
 Route::get('/jobs/my_corporate', array('before'=>'auth.is_lister', 'uses'=>'JobsController@myCorporate'));
 
-Route::get('/jobs/create', array('as'=>'jobs.create', 'uses'=>'JobsController@create'));
+Route::get('/jobs/create', array('before'=>'auth.is_lister', 'as'=>'jobs.create', 'uses'=>'JobsController@create'));
+Route::post('/jobs/create', array('before'=>'auth.is_lister','as'=>'jobs.store', 'uses'=>'JobsController@store'));
 Route::get('/jobs/{id}/bids', array('as'=>'bids.list', 'uses'=>'JobsController@bids'));
 
 Route::get('/api_reference', array('as'=>'api','uses'=>'UsersController@api'));

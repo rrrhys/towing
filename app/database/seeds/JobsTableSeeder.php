@@ -38,7 +38,7 @@ class JobsTableSeeder extends Seeder {
             $user_id = rand(1, count(User::all()));
             $user = User::find($user_id);
             $job = Job::create([
-                'user_id' => $user_id,
+                'user_id' => $index<10 ? 2 : $user_id, /*Make sure rrrhys gets some */
                 'top_user_id'=> $user->parent_id,
                 'job_type_id'=> rand(1,count($job_types)),
                 'job_number'=> rand(10000,99999),
@@ -51,14 +51,15 @@ class JobsTableSeeder extends Seeder {
                 'started_at'=> $faker->dateTimeBetween($startDate = '-5 days', $endDate = '-36 hours') ,
                 'finishes_at'=> $faker->dateTimeBetween($startDate = '-36 hours', $endDate = '+3 days') ,
                 'pickup_at'=> $pickup ? $faker->dateTimeBetween($startDate = '+1 day', $endDate = '+5 days') : null,
-                'dropoff_at'=> $pickup ? null : $faker->dateTimeBetween($startDate = '+3 days', $endDate = '+6 days'),
-                'current_bid'=> -1
+                'dropoff_at'=> $pickup ? null : $faker->dateTimeBetween($startDate = '+3 days', $endDate = '+6 days')
                 ]);
-            $bids = rand(0,5);
+            $bids = rand(0,20);
             for($i = 0; $i < $bids;$i++){
-                $bid = Bid::create();
-                $bid->job_id = $job->id;
-                $bid->amount = Rand(100.00,500.00);
+                $users_count = User::where('is_tower','=',true)->count();
+                log::debug($users_count);
+                $bid_user = User::where('is_tower','=',true)->offset(rand(0,$users_count-1))->first();
+                log::debug($bid_user);
+                $job->addBid(Rand(300.00,500.00),$bid_user);
             }
 
         }

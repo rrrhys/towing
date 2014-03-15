@@ -17,7 +17,6 @@ class CreateBidsTable extends Migration {
 			$table->decimal('amount');
 			$table->integer('user_id');
 			$table->integer('job_id');
-			$table->boolean('is_winning');
 			$table->timestamps();
 			$table->softDeletes();
         });
