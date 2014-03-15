@@ -34,7 +34,8 @@ class UsersTableSeeder extends Seeder {
             User::create([
             	'email'=>$faker->email,
             	'password'=>Hash::make($faker->word),
-                'parent_id'=>0
+                'parent_id'=>0,
+                'is_tower'=>1
             ]);
         }
     }

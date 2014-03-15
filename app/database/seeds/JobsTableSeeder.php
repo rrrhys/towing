@@ -37,7 +37,7 @@ class JobsTableSeeder extends Seeder {
             $pickup = rand(0,1);
             $user_id = rand(1, count(User::all()));
             $user = User::find($user_id);
-            Job::create([
+            $job = Job::create([
                 'user_id' => $user_id,
                 'top_user_id'=> $user->parent_id,
                 'job_type_id'=> rand(1,count($job_types)),
@@ -52,8 +52,14 @@ class JobsTableSeeder extends Seeder {
                 'finishes_at'=> $faker->dateTimeBetween($startDate = '-36 hours', $endDate = '+3 days') ,
                 'pickup_at'=> $pickup ? $faker->dateTimeBetween($startDate = '+1 day', $endDate = '+5 days') : null,
                 'dropoff_at'=> $pickup ? null : $faker->dateTimeBetween($startDate = '+3 days', $endDate = '+6 days'),
-                'current_bid'=> rand(500.00, 2000.00)
+                'current_bid'=> -1
                 ]);
+            $bids = rand(0,5);
+            for($i = 0; $i < $bids;$i++){
+                $bid = Bid::create();
+                $bid->job_id = $job->id;
+                $bid->amount = Rand(100.00,500.00);
+            }
 
         }
     }

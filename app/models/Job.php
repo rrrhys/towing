@@ -30,4 +30,20 @@ class Job extends \Eloquent {
         return $this->finishes_at < Carbon::now();
     }
 
+    public function addBid($amount, $user){
+        $bid = Bid::create();
+        $bid->amount = $amount;
+        $bid->user_id = $user->id;
+        $lowestCurrentBid = $this->bids()->orderBy('amount','asc')->first();
+        if($lowestCurrentBid){
+            if($lowestCurrentBid->amount > $bid->amount){
+                $lowestCurrentBid->is_winning = false;
+                $bid->is_winning = true;
+                $lowestCurrentBid->save();
+                $this->current_bid = $bid->amount;
+            }
+        }
+        $bid->save();
+    }
+
 }
