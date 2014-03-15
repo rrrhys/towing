@@ -19,6 +19,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password');
 	protected $fillable = array('email','password');
+    protected $softDelete = true;
 
 	/**
 	 * Get the unique identifier for the user.
@@ -48,6 +49,26 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function getReminderEmail()
 	{
 		return $this->email;
+	}
+	public function tokens(){
+		return $this->hasMany('TokenSession','user_id');
+	}
+	public function parent(){
+		return $this->belongsTo('User','parent_id','id');
+	}
+	public function children(){
+		return $this->hasMany('User','parent_id','id');
+	}
+	public function jobs(){
+		if($this->is_corporate){
+			return $this->hasMany('Job','top_user_id','id')->orderBy('finishes_at','asc');
+		}
+		else{
+			return $this->hasMany('Job','user_id','id')->orderBy('finishes_at','asc');
+		}
+	}
+	public function bids(){
+		return $this->hasMany('Bid','user_id','id');
 	}
 
 }

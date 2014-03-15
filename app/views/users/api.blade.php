@@ -1,3 +1,9 @@
+@extends('layout')
+@section('title')
+API Reference
+@stop
+@section('content')
+
 /Users/rrrhys/projects/towing/app/views/users/create.blade.php<br>
 <style>
 code {
@@ -12,9 +18,9 @@ code {
 h3 {
 	margin-top: 0;
 }
-.hidden {
+.collapsed {
 	overflow: hidden;
-	height: 30px;
+	height: 50px;
 }
 code.incomplete {
 	background-color: #ff6666;
@@ -58,7 +64,7 @@ results {
 
 <h1>Public</h1>
 <h2>Users</h2>
-<code class="hidden">
+<code class="collapsed">
 	<h3>Login:</h3>
 	<url>/authenticate (Post)</url>
 	<arguments>Input fields:
@@ -104,7 +110,7 @@ results {
 
 
 
-<code class="hidden">
+<code class="collapsed">
 <h3>List Tokens:</h3>
 	<url>/users/tokens (Post)</url>
 	<arguments>Input fields:
@@ -141,7 +147,7 @@ results {
 
 </code>
 
-<code class="hidden">
+<code class="collapsed">
 <h3>Deactivate a token:</h3>
 	<url>/users/deactivate_token (Post)</url>
 	<arguments>Input fields:
@@ -168,7 +174,7 @@ results {
 
 </code>
 <h4>Corporate Only</h4>
-<code class="hidden">
+<code class="collapsed">
 	<h3>Add child users:</h3>
 	<url>/users/add_child (Post)</url>
 	<arguments>Input fields:
@@ -213,7 +219,7 @@ results {
 </code>
 
 
-<code class="hidden">
+<code class="collapsed">
 	<h3>List child users:</h3>
 	<url>/users/list (Post)</url>
 	<arguments>Input fields:
@@ -249,30 +255,30 @@ results {
 
 </code>
 <h2>Jobs</h2>
-<code class="hidden incomplete">
+<code class="collapsed incomplete">
 	<h3>Create</h3>
 </code>
-<code class="hidden">
+<code class="collapsed">
 	<h3>List</h3>
 	<url>/jobs/my (Get)</url>
 	<span id="my-jobs"></span>
 </code>
-<code class="hidden">
+<code class="collapsed">
 	<h3>List Corporate</h3>
 	<url>/jobs/myCorporate (Get)</url>
 	<span id="my-corporate-jobs"></span>
 </code>
-<code class="hidden incomplete">
+<code class="collapsed incomplete">
 	<h3>Edit</h3>
 </code>
-<code class="hidden incomplete">
+<code class="collapsed incomplete">
 	<h3>Delete</h3>
 </code>
 
 <h1>Admin</h1>
 
 
-<code class="hidden">
+<code class="collapsed">
 	<h3>List users:</h3>
 	<url>/admin/users/list (Post)</url>
 	<arguments>Input fields:
@@ -308,7 +314,7 @@ results {
 
 </code>
 
-<code class="hidden">
+<code class="collapsed">
 	<h3>Set as corporate/admin/tower/lister:</h3>
 	<url>/admin/users/set_property (Post)</url>
 	<arguments>Input fields:
@@ -421,11 +427,11 @@ $(function(){
 
 	$("body").on('click','code h3',function(){
 		var el = $(this).parent();
-		if(el.hasClass('hidden')){
-			el.removeClass('hidden');
+		if(el.hasClass('collapsed')){
+			el.removeClass('collapsed');
 		}
 		else{
-			el.addClass('hidden');
+			el.addClass('collapsed');
 		}
 	});
 	$("body").on('click','#create_child',function(e){
@@ -574,3 +580,5 @@ $(function(){
 	$("#login").click()
 
 });</script>
+
+@stop

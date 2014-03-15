@@ -43,6 +43,71 @@ Route::filter('auth.basic', function()
 {
 	return Auth::basic();
 });
+Route::filter('auth.is_user',function(){
+
+	$token = Input::get('token');
+	$tokenSession = TokenSession::where('token','=',$token)->first();
+	if(!$tokenSession){
+		$user = Auth::user();
+		if(!$user){
+			return Response::make('You need to be a user to do this.',401);
+		}
+	}
+	else{
+		$user = $tokenSession->user;		
+	}
+
+		if(!$user){
+			return Response::make('You need to be a user to do this.',401);
+		}
+		else{
+			if(!Auth::check()){
+				Auth::login($user);
+			}
+		}
+});
+Route::filter('auth.is_corporate',function(){
+	$token = Input::get('token');
+	$tokenSession = TokenSession::where('token','=',$token)->first();
+	if(!$tokenSession){
+		$user = Auth::user();
+		if(!$user){
+			return Response::make('You need to be a corporate user to do this.',401);
+		}
+	}
+	else{
+		$user = $tokenSession->user;
+	}
+		if(!$user->is_corporate){
+			return Response::make('You need to be a corporate user to do this.',401);
+		}
+		else{
+			if(!Auth::check()){
+				Auth::login($user);
+			}
+		}
+});
+Route::filter('auth.admin',function(){
+	$token = Input::get('token');
+	$tokenSession = TokenSession::where('token','=',$token)->first();
+	if(!$tokenSession){
+		$user = Auth::user();
+		if(!$user){
+			return Response::make('You need to be an administrator to do this.',401);
+		}
+	}
+	else{
+		$user = $tokenSession->user;
+	}
+		if(!$user->is_admin){
+			return Response::make('You need to be an administrator to do this.',401);
+		}
+		else{
+			if(!Auth::check()){
+				Auth::login($user);
+			}
+		}
+});
 
 /*
 |--------------------------------------------------------------------------

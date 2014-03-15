@@ -4,6 +4,7 @@ class SessionsController extends \BaseController {
 
 	/**
 	 * Show the form for creating a new resource.
+	 * Mapped to /authenticate
 	 *
 	 * @return Response
 	 */
@@ -15,26 +16,19 @@ class SessionsController extends \BaseController {
 		if(Auth::attempt(array(
 			'email'=>$email, 
 			'password'=>Input::get('password')))){
+			$user = Auth::user();
 				$session = new TokenSession();
 				$session->email = $email;
 				$session->token = $token;
+				$session->user_id = $user->id;
 				$session->save();
+				$session->is_admin = $user->is_admin;
 				return $session->toJson();
 		}
 		else{
 			return Response::make('', 401);
 		}
 
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
 	}
 
 }
