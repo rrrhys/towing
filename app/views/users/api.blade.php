@@ -66,7 +66,7 @@ results {
 <h2>Users</h2>
 <code class="collapsed">
 	<h3>Login:</h3>
-	<url>/authenticate (Post)</url>
+	<url>/signin (Post)</url>
 	<arguments>Input fields:
 		<ul>
 			<li>email</li>
@@ -474,7 +474,7 @@ $(function(){
 		validation_reset("login")
 		var email = $("#email").val();
 		var pass = $("#password").val();
-		$.post("/authenticate",
+		$.post("/signin",
 		{
 			email: email,
 			password: pass
