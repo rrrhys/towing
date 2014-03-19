@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-static-top">
+<div class="navbar navbar-default navbar-fixed-top">
 		<a class="navbar-brand" href="/">aa</a>
 		<ul class="nav navbar-nav">
 		<li><a href="{{URL::route('api')}}">API Reference</a></li>
@@ -12,18 +12,19 @@
 						@if (Auth::user()->is_lister)
 						<li><a href="{{URL::route('jobs.my')}}">My Jobs</a></li>
 						@endif
+						<li><a href="{{URL::route('signout')}}">Logout</a></li>
 					</ul>
 				</li>
 
 			@else
-				<!--li>{{link_to_action('UserController@create','Sign in')}}</li-->
+				<!--li>{{link_to_action('UsersController@create','Sign in')}}</li-->
 				<li class='dropdown'>
 					<a class='signin_popup' data-toggle='dropdown'>
 						Sign in
 					</a>
 
 	<div class="dropdown-menu" style='padding: 20px;'>
-		{{ Form::open(array('action'=>array('SessionController@create'),'class'=>'signin'))}}
+		{{ Form::open(array('action'=>array('signin'),'class'=>'signin'))}}
 {{Form::label('email')}}
 {{Form::text('email','',array('class'=>'signin'))}}
 
@@ -35,8 +36,8 @@
 	</div>
 
 				</li>
-				<li>{{link_to_action('UserController@create','Create Account')}}</li>
-				<li>{{link_to_action('UserController@create','To Dos')}}</li>
+				<li>{{link_to_action('UsersController@create','Create Account')}}</li>
+				<li>{{link_to_action('UsersController@create','To Dos')}}</li>
 			@endif
 			
 		</ul>

@@ -13,7 +13,7 @@
 </head>
 <body>
  @include('nav')
-<div class="container">
+<div class="container content">
 @include('flash_messages')
 @include('validation_errors')
 <h3>@yield('title')</h3>

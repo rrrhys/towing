@@ -79,6 +79,7 @@ return array(
 	*/
 
 	'providers' => array(
+		'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',

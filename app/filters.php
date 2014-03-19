@@ -66,6 +66,30 @@ Route::filter('auth.is_user',function(){
 			}
 		}
 });
+
+Route::filter('auth.is_lister',function(){
+
+	$token = Input::get('token');
+	$tokenSession = TokenSession::where('token','=',$token)->first();
+	if(!$tokenSession){
+		$user = Auth::user();
+		if(!$user){
+			return Response::make('You need to be a listing user to do this.',401);
+		}
+	}
+	else{
+		$user = $tokenSession->user;		
+	}
+
+		if(!$user->is_lister){
+			return Response::make('You need to be a listing user to do this.',401);
+		}
+		else{
+			if(!Auth::check()){
+				Auth::login($user);
+			}
+		}
+});
 Route::filter('auth.is_corporate',function(){
 	$token = Input::get('token');
 	$tokenSession = TokenSession::where('token','=',$token)->first();

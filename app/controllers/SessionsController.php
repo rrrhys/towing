@@ -30,5 +30,10 @@ class SessionsController extends \BaseController {
 		}
 
 	}
+	public function destroy(){
+		Auth::logout();
+		Session::flash('success', 'You have been logged out successfully.');
+		return Redirect::to("/");
+	}
 
 }

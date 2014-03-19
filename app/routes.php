@@ -11,12 +11,11 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', 'HomeController@showWelcome');
 
-Route::post('authenticate', array('as'=>'authenticate', 'uses' => 'SessionsController@store'));
+Route::post('signin', array('as'=>'signin', 'uses' => 'SessionsController@store'));
+Route::post('signout', array('as'=>'signout', 'uses' => 'SessionsController@destroy'));
+Route::get('signout', array('as'=>'signout', 'uses' => 'SessionsController@destroy'));
 
 //is user authentication
 Route::post('/users/tokens', 			array('before'=>'auth.is_user','uses'=>'UsersController@listTokens'));
