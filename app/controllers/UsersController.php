@@ -64,7 +64,18 @@ class UsersController extends \BaseController {
 		$user = new User;
 		return View::make('users.api')->with('user',$user);
 	}
-
+	public function createTower(){
+		$user = new User();
+		$user->is_tower = true;
+		$user->tower_details = new TowerDetail();
+		$terms = View::make('users.termsAndConditions');
+		return View::make('users.create-tower')->with('user',$user)->with('terms',$terms);
+	}
+	public function createLister(){
+		$user = new User();
+		$user->is_lister = true;
+		return View::make('users.create-lister')->with('user',$user);
+	}
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -73,8 +84,17 @@ class UsersController extends \BaseController {
 	public function store()
 	{
 		//
-		$user = User::create(Input::all());
+		$user = User::create(Input::get('user'));
+		if(Input::has('tower_details')){
+			$arr = Input::get('tower_details');
+			$towerDetails = new TowerDetail($arr);
+			$towerDetails->user_id = $user->id;
+			$towerDetails->save();
+			$user->tower_details()->associate($towerDetails);
+		}
 		$user->save();
+		
+		
 		return $user->toJson();
 	}
 

@@ -41,9 +41,10 @@
 						Create Account
 					</a>
 
-					<div class="dropdown-menu" style='padding: 20px;'>
-						(Push to tower/lister create here)
-					</div>
+					<ul class="dropdown-menu">
+						<li><a href="{{URL::route('join-tower')}}">I tow vehicles, and need jobs</a></li>
+			  			<li><a href="{{URL::route('join-lister')}}">I need vehicles towed</a></li>
+					</ul>
 
 				</li>
 				<li>{{link_to_action('UsersController@create','To Dos')}}</li>

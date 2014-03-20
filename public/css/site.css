@@ -23,6 +23,12 @@ form {
 	font-size: 12px;
 	background-color: #fefefe;
 }
+.dropdown-menu {
+	text-transform: none;
+}
 .content {
 	padding-top: 60px;
+}
+fieldset {
+	padding-bottom: 20px;
 }

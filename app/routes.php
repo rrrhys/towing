@@ -28,6 +28,10 @@ Route::post('/users/list',				array('before'=>'auth.is_corporate','uses'=>'Users
 
 Route::resource('users', 'UsersController');
 
+Route::get('/join-tower',array('as'=>'join-tower','uses'=>'UsersController@createTower'));
+Route::get('/join-lister',array('as'=>'join-lister','uses'=>'UsersController@createLister'));
+Route::post('/user/store',array('as'=>'user.store','uses'=>'UsersController@store'));
+
 //must be an admin.
 Route::post('/admin/users/set_property', 	array('before'=>'auth.admin','uses'=>'AdminController@setProperty'));
 Route::post('/admin/users/list', 			array('before'=>'auth.admin','uses'=>'AdminController@listUsers'));
