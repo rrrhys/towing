@@ -17,5 +17,8 @@ $(function(){
 	});
 
 
+//attach timeago.
+jQuery.timeago.settings.allowFuture = true;
+$(".timeago").timeago();
 
-})
+});

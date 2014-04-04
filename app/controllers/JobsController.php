@@ -28,6 +28,8 @@ class JobsController extends \BaseController {
 
 		if($job){
 			return View::Make('bids.list')->with('job',$job);
+		}else{
+			return Response::make("Couldn't find that job.",404);
 		}
 	}
 	public function my($sort_column="finishes_at", $sort_direction="asc"){
@@ -39,6 +41,37 @@ class JobsController extends \BaseController {
 		else{
 			return View::make('jobs.my')->with('user',$user);
 		}
+	}
+
+	public function browse($sort_column="finishes_at", $sort_direction="asc"){
+		$jobs = Job::all();
+		if(Request::ajax()){
+			return $jobs->orderBy($sort_column, $sort_direction)->toJson();
+		}else{
+			return View::make('jobs.browse')->with(array('jobs'=>$jobs,'user'=>Auth::User()));
+		}
+	}
+	public function create_bid($id){
+		$job = Job::where('id',$id)->first();
+		$bid = new Bid();
+		$terms = View::make('terms.createBidTermsAndConditions');
+		if($job){
+			return View::Make('bids.create')->with(array('job'=>$job, 'bid'=>$bid, 'terms'=>$terms));
+		}else{
+			return Response::make("Couldn't find that job.",404);
+		}
+	}
+	public function store_bid($id){
+		$job = Job::where('id',$id)->first();
+		if($job){
+		//work on saving bid.
+			$amount = Input::get('amount');
+			$user = Auth::user();
+			$job->addBid($amount, $user);
+			return Redirect::to('job',array('id'=>$job->id));
+		}else{
+			return Response::make("Couldn't find that job.",404);
+		}		
 	}
 
 	/**
@@ -63,6 +96,8 @@ class JobsController extends \BaseController {
 	public function store()
 	{
 
+		$user = Auth::user();
+
 		$input = Input::all();
 		$finishes_hours_from_now = $input['finishes_at'];
 		$input['finishes_at'] = Carbon::now()->addHours($finishes_hours_from_now);
@@ -73,11 +108,15 @@ class JobsController extends \BaseController {
 		Log::debug($input);
 		//$job = Job::create($input);
 		$job = new Job($input);
-		$job->user_id = Auth::User()->id;
-		$job->top_user_id = Auth::User()->parent->id;
+		$job->user_id = $user->id;
+
+		if($user->parent){
+			$job->top_user_id = $user->parent->id;
+		}
+		
 		$job->save();
 
-		return Redirect::to('jobs.my');
+		return Redirect::route('jobs.my');
 
 	}
 

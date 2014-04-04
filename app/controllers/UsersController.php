@@ -1,7 +1,9 @@
 <?php
 
 class UsersController extends \BaseController {
-
+public function __construct() {
+    $this->beforeFilter('csrf', array('on'=>'post'));
+}
 	public function corpAddChildUser(){
 		$user = Auth::user();
 
@@ -67,14 +69,17 @@ class UsersController extends \BaseController {
 	public function createTower(){
 		$user = new User();
 		$user->is_tower = true;
-		$user->tower_details = new TowerDetail();
-		$terms = View::make('users.termsAndConditions');
+		$user->user_details = new UserDetail();
+		$terms = View::make('terms.towerTermsAndConditions');
 		return View::make('users.create-tower')->with('user',$user)->with('terms',$terms);
 	}
 	public function createLister(){
 		$user = new User();
 		$user->is_lister = true;
-		return View::make('users.create-lister')->with('user',$user);
+		$user->user_details = new UserDetail();
+		$terms = View::make('terms.listerTermsAndConditions');
+		return View::make('users.create-lister')->with('user',$user)->with('terms',$terms);
+	
 	}
 	/**
 	 * Store a newly created resource in storage.
@@ -84,13 +89,34 @@ class UsersController extends \BaseController {
 	public function store()
 	{
 		//
-		$user = User::create(Input::get('user'));
-		if(Input::has('tower_details')){
-			$arr = Input::get('tower_details');
-			$towerDetails = new TowerDetail($arr);
-			$towerDetails->user_id = $user->id;
-			$towerDetails->save();
-			$user->tower_details()->associate($towerDetails);
+
+		$validator = Validator::make(Input::get('user'), User::$rules);
+		if(!$validator->passes()){
+			if(Input::get('account_type') == 'tower'){
+				return Redirect::route('join-tower')->with('message','Validation errors occurred!')->withErrors($validator)->withInput();
+			}
+			else{
+				return Redirect::route('join-lister')->with('message','Validation errors occurred!')->withErrors($validator)->withInput();
+			}
+		}
+
+		$user_form = Input::get('user');
+		$user_form['password'] = Hash::make($user_form['password']);
+		$user = User::create($user_form);
+
+		if(Input::get('account_type') == 'tower'){
+			$user->is_tower = true;
+		}
+		else{
+			$user->is_lister = true;
+		}
+
+			$user->save();
+		if(Input::has('user_details')){
+			$arr = Input::get('user_details');
+			$userDetails = new UserDetail($arr);
+			$userDetails->user()->associate($user);
+			$userDetails->save();
 		}
 		$user->save();
 		

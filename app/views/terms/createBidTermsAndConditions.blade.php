@@ -1,0 +1,1 @@
+This is the terms and conditions located in app/views/users/createBidTermsAndConditions.blade.php

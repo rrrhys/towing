@@ -24,7 +24,9 @@ class Job extends \Eloquent {
 	{
 	    return array('created_at','modified_at','deleted_at','pickup_at','dropoff_at','started_at','finishes_at');
 	}
-
+    public function getUtcAttribute(){
+        return $this->finishes_at->toISO8601String();
+    }
     public function getFinishedAttribute()
     {
         return $this->finishes_at < Carbon::now();

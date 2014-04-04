@@ -37,11 +37,20 @@ Route::post('/admin/users/set_property', 	array('before'=>'auth.admin','uses'=>'
 Route::post('/admin/users/list', 			array('before'=>'auth.admin','uses'=>'AdminController@listUsers'));
 
 
+//for listers or towers.
+Route::get('/jobs/browse', array('as'=>'jobs.browse','before'=>'auth.is_user', 'uses'=>'JobsController@browse'));
+
+
+//for listers only.
 Route::get('/jobs/my', array('as'=>'jobs.my','before'=>'auth.is_lister', 'uses'=>'JobsController@my'));
 Route::get('/jobs/my_corporate', array('before'=>'auth.is_lister', 'uses'=>'JobsController@myCorporate'));
 
 Route::get('/jobs/create', array('before'=>'auth.is_lister', 'as'=>'jobs.create', 'uses'=>'JobsController@create'));
 Route::post('/jobs/create', array('before'=>'auth.is_lister','as'=>'jobs.store', 'uses'=>'JobsController@store'));
 Route::get('/jobs/{id}/bids', array('as'=>'bids.list', 'uses'=>'JobsController@bids'));
+Route::get('/jobs/{id}/place_bid', array('as'=>'bids.create', 'uses'=>'JobsController@create_bid'));
+Route::post('/jobs/{id}/store_bid', array('as'=>'bids.store', 'uses'=>'JobsController@store_bid'));
+Route::get('/jobs/{id}/', array('as'=>'job', 'uses'=>'JobsController@view'));
+
 
 Route::get('/api_reference', array('as'=>'api','uses'=>'UsersController@api'));

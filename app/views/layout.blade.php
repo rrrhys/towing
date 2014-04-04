@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{Config::get('app.name')}} | @yield('title')</title>
+	<title>{{Config::get('app.name')}} | @yield('page_title')</title>
 	{{HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')}}
 	{{HTML::script('//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js')}}
 	{{HTML::script('js/bootstrap-datepicker.js')}}
+	{{HTML::script('js/jquery.timeago.js')}}
 	{{HTML::script('js/site.js')}}
 	{{HTML::style('//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')}}
 

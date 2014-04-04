@@ -20,7 +20,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password');
 	protected $fillable = array('email','password');
     protected $softDelete = true;
-
+    public static $rules = array(
+    		'email'=>'required|email|unique:users',
+    		'password'=>'required|min:6|confirmed',
+    		'password_confirmation'=>'required'
+    	);
 	/**
 	 * Get the unique identifier for the user.
 	 *
@@ -71,8 +75,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Bid','user_id','id');
 	}
 
-	public function tower_details(){
-		return $this->hasOne('TowerDetail');
+	public function user_details(){
+		return $this->hasOne('UserDetail');
 		/*if(!$tower_detail){
 			$tower_detail = new TowerDetail(['user_id'=>$this->id]);
 		}

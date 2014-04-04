@@ -23,7 +23,7 @@ class SessionsController extends \BaseController {
 				$session->user_id = $user->id;
 				$session->save();
 				$session->is_admin = $user->is_admin;
-				return $session->toJson();
+				return Redirect::route('jobs.my');
 		}
 		else{
 			return Response::make('', 401);

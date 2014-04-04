@@ -1,9 +1,9 @@
 @extends('layout')
 @section('title')
-Create new Towing account
+Create new Listing account
 @stop
 @section('content')
-<p>This page creates a new account for users who will be bidding on jobs. If you wish to instead list jobs for bidding, please <a href="{{URL::route('join-lister')}}">create an account here</a> instead.
+<p>This page creates a new account for users who will be listing jobs for others to bid on. If you wish to instead bid on items to win work, <a href="{{URL::route('join-tower')}}">create an account here</a> instead.
 {{Form::model($user,array('route'=>'user.store'))}}
 
 <div class="row">
@@ -12,7 +12,7 @@ Create new Towing account
 		@include('users.partials.company_details')
 		@include('users.partials.contact_details')
 		
-		{{Form::hidden('account_type','tower')}}
+		{{Form::hidden('account_type','lister')}}
 		<h4>Terms and Conditions</h4>
 		<fieldset class="well">
 			<textarea class="col-xs-12 form-control">{{$terms}}</textarea>
