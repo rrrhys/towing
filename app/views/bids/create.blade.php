@@ -13,7 +13,7 @@ This job has finished.
 @endif
 <h4>Current Status</h4>
 @if($job->lowest_bid)
-The current lowest bid is {{$job->lowest_bid}}
+The current lowest bid is ${{$job->lowest_bid->amount}} by user {{$job->lowest_bid->owner->clickable_email}}
 @else
 There is currently no lowest bid.
 

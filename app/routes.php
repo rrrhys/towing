@@ -32,6 +32,7 @@ Route::get('/join-tower',array('as'=>'join-tower','uses'=>'UsersController@creat
 Route::get('/join-lister',array('as'=>'join-lister','uses'=>'UsersController@createLister'));
 Route::post('/user/store',array('as'=>'user.store','uses'=>'UsersController@store'));
 
+Route::get('/user/show/{username}',array('as'=>'user.show','uses'=>'UsersController@show'));
 //must be an admin.
 Route::post('/admin/users/set_property', 	array('before'=>'auth.admin','uses'=>'AdminController@setProperty'));
 Route::post('/admin/users/list', 			array('before'=>'auth.admin','uses'=>'AdminController@listUsers'));

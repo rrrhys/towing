@@ -19,7 +19,6 @@ class Job extends \Eloquent {
  	public function bids(){
 		return $this->hasMany('Bid','job_id','id')->orderBy('amount','asc');
 	}
-
 	public function getDates()
 	{
 	    return array('created_at','modified_at','deleted_at','pickup_at','dropoff_at','started_at','finishes_at');

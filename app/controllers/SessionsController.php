@@ -26,7 +26,7 @@ class SessionsController extends \BaseController {
 				return Redirect::route('jobs.my');
 		}
 		else{
-			return Response::make('', 401);
+			return Response::make('Could not log you in.', 401);
 		}
 
 	}

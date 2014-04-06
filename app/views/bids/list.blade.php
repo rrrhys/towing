@@ -13,14 +13,18 @@ Bids on job to postcode {{$job->dropoff_postcode}} <small><a href="{{URL::route(
 	</tr>
 @foreach($job->bids as $bid)
 	<tr>
-		<td>{{$bid->owner->email}}</td>
+		<td>{{$bid->owner->clickable_email}}</td>
 		<td>{{$bid->amount}}</td>
 		<td>{{$bid->id == $job->lowest_bid->id ? "*" : ""}}</td>
 		<td>{{$bid->created_at}}</td>
 	</tr>
 @endforeach
 @if($job->bids->count() == 0)
-	<tr><td colspan="6">You have no bids!</td></tr>
+	<tr><td colspan="6">There are no bids!</td></tr>
 @endif
 </table>
+@if(Auth::user()->is_tower)
+<a href="{{URL::route('bids.create',array($job->id))}}" class='btn btn-primary'>Place Bid</a>
+
+@endif
 @stop

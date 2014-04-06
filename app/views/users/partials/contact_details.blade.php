@@ -2,6 +2,10 @@
 		<fieldset class="well">
 		<div class="row">
 			<div class="col-xs-6">
+
+{{Form::label('user[email]','Email Address')}}
+			{{Form::text('user[email]',$user->email,array('class'=>'form-control'))}}
+				
 			{{Form::label('user_details[contact_first_name]','First Name')}}
 			{{Form::text('user_details[contact_first_name]', $user->user_details->contact_first_name,array('class'=>'form-control'))}}
 			</div>

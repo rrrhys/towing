@@ -9,6 +9,7 @@
 		<td>{{$job->vehicle_model}}</td>
 		<td>{{$job->pickup_postcode}}</td>
 		<td>{{$job->dropoff_postcode}}</td>
+		<td>{{$job->owner->clickable_email}}</td>
 		<td>
 			@if($user->is_tower)
 				<a href="{{URL::route('bids.create',array($job->id))}}">Place bid</a>

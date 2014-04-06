@@ -16,6 +16,8 @@
 					</ul>
 				</li>
 
+				<li><a href="{{URL::route('jobs.browse')}}">Browse Jobs</a></li>
+
 			@else
 				<!--li>{{link_to_action('UsersController@create','Sign in')}}</li-->
 				<li class='dropdown'>

@@ -18,10 +18,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	protected $hidden = array('password');
-	protected $fillable = array('email','password');
+	protected $fillable = array('email','password','username');
     protected $softDelete = true;
     public static $rules = array(
     		'email'=>'required|email|unique:users',
+    		'username'=>'required|alphadash|between:5,20|unique:users',
     		'password'=>'required|min:6|confirmed',
     		'password_confirmation'=>'required'
     	);
@@ -43,6 +44,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function getAuthPassword()
 	{
 		return $this->password;
+	}
+	public function getClickableEmailAttribute(){
+		//returns a clickable link for this user.
+		//easier to implement avatar etc later
+		return "<a href='".URL::route('user.show',array($this->username))."'>" . $this->username . "</a>";
 	}
 
 	/**
