@@ -1,22 +1,26 @@
 @extends('layout')
 @section('title')
 @stop
+@section('popout')
+<div class="jumbotron">
+	<div class='container'>
+  <h1>FIND TOWING JOBS</h1>
+  <h4>How it works</h4>
+  <p>Find and bid on towing jobs in your area <a href="{{URL::route('jobs.browse')}}">Browse jobs...</a></p>
+  </div>
+</div>
+@stop
 @section('content')
 
-<div class="jumbotron">
-  <h1>Hello, world!</h1>
-  <h4>How it works</h4>
-  <p>One line explanation about how the reverse auction works <a href="#more">Read more...</a></p>
-  
-</div>
+
 <div class="row">
 	<div class="col-md-6">
 		<div class="panel panel-info">
 			<div class="panel-heading">Create an account</div>
 			<div class="panel-body">
 			<p>Create an account for free to list jobs, or view and start bidding on active jobs.
-			  <p style="text-align: center; padding-top: 24px;"><a class="btn btn-primary btn-lgr btn-center" role="button" href="/join-tower">I tow vehicles, and need jobs</a><br><br>
-			  <a class="btn btn-warning btn-lgr" role="button" href="/join-lister">I need vehicles towed</a></p>
+			  <p style="text-align: right; padding-top: 24px;"><a class="btn btn-suncorp btn-center btn-fixed" role="button" href="/join-tower">I tow vehicles, and need jobs</a><br><br>
+			  <a class="btn btn-suncorp btn-fixed" role="button" href="/join-lister">I need vehicles towed</a></p>
 			</div>
 		</div>
 	</div>
@@ -34,6 +38,27 @@
 
 					<a class="btn btn-lgr btn-min-size btn-default" id='front_page_login_box' role="button">Sign in</a>
 					{{Form::close()}}
+			</div>
+		</div>
+	</div>
+ </div>
+ <div class="row">
+ 	<div class='col-md-12'>
+	 	<div class='panel panel-info'>
+	 		<div class='panel-heading'>Browse Listings</div>
+	 		<div class='panel-body'>
+				<table class="table table-striped">
+				@include('jobs.partial.tableheader')
+				@include('jobs.partial.table')
+				@if($jobs->count() == 0)
+					<tr><td colspan="10">There are no jobs matching your criteria.
+						@if($user->is_lister):
+							<a href="{{URL::route('jobs.create')}}">List one</a>
+						@endif
+						</td></tr>
+				@endif
+				</table>
+				<a href="{{URL::route('jobs.browse')}}">Browse more listings</a>
 			</div>
 		</div>
 	</div>

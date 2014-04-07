@@ -7,6 +7,8 @@
 	{{HTML::script('js/bootstrap-datepicker.js')}}
 	{{HTML::script('js/jquery.timeago.js')}}
 	{{HTML::script('js/site.js')}}
+<link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Tauri' rel='stylesheet' type='text/css'>
 	{{HTML::style('//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')}}
 
 	{{HTML::style('css/site.css')}}
@@ -14,6 +16,8 @@
 </head>
 <body>
  @include('nav')
+ <div style='padding-top: 60px;'>&nbsp;</div>
+ @yield('popout')
 <div class="container content">
 @include('flash_messages')
 @include('validation_errors')

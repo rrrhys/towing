@@ -1,5 +1,6 @@
 <div class="navbar navbar-default navbar-fixed-top">
-		<a class="navbar-brand" href="/">aa</a>
+	<div class='container'>
+		<a class="navbar-brand" href="/">TOWING JOBS</a>
 		<ul class="nav navbar-nav">
 		<li><a href="{{URL::route('api')}}">API Reference</a></li>
 			@if (Auth::check())
@@ -54,7 +55,7 @@
 			
 		</ul>
 	</div>
-
+</div>
 	<script>
 	$(function(){
 		$(".signin_popup").on('click',function(){

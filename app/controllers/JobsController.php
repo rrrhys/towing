@@ -23,11 +23,12 @@ class JobsController extends \BaseController {
 			//return Response::make("You need to belong to a corporate account to do that.",401);
 		}
 	}
-	public function bids($id){
+	public function view($id){
 		$job = Job::where('id','=',$id)->first();
-
+		$bid = new Bid();
+		$terms = View::make('terms.createBidTermsAndConditions');
 		if($job){
-			return View::Make('bids.list')->with('job',$job);
+			return View::Make('jobs.view')->with(array('job'=>$job, 'bid'=>$bid, 'terms'=>$terms));
 		}else{
 			return Response::make("Couldn't find that job.",404);
 		}
@@ -49,16 +50,6 @@ class JobsController extends \BaseController {
 			return $jobs->orderBy($sort_column, $sort_direction)->toJson();
 		}else{
 			return View::make('jobs.browse')->with(array('jobs'=>$jobs,'user'=>Auth::User()));
-		}
-	}
-	public function create_bid($id){
-		$job = Job::where('id',$id)->first();
-		$bid = new Bid();
-		$terms = View::make('terms.createBidTermsAndConditions');
-		if($job){
-			return View::Make('bids.create')->with(array('job'=>$job, 'bid'=>$bid, 'terms'=>$terms));
-		}else{
-			return Response::make("Couldn't find that job.",404);
 		}
 	}
 	public function store_bid($id){

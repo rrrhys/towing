@@ -1,6 +1,22 @@
+body {
+	
+}
+.navbar {
+	font-family: 'Tauri', sans-serif;
+}
 label {
 	width: 180px;
 	margin: 10px;
+}
+h3 {
+	font-size: 22px;
+	color: #006f66;
+	font-family: 'Raleway', sans-serif;
+}
+h4 {
+	font-size: 18px;
+	color: #006f66;
+	font-family: 'Raleway', sans-serif;	
 }
 .btn-lgr {
 padding: 20px 16px;
@@ -26,9 +42,56 @@ form {
 .dropdown-menu {
 	text-transform: none;
 }
-.content {
-	padding-top: 60px;
-}
 fieldset {
 	padding-bottom: 20px;
 }
+.panel .panel-heading {
+	/*suncorp colours*/
+	color: #006f66;
+	font-weight: bold;
+	background-color:#fff;
+	border-color: #4DBCB3;
+}
+.panel {
+	border-color: #4DBCB3;
+}
+.panel-popout {
+	background-color: #006f66;
+	color: #fff;
+}
+body a {
+	color: #006f66;
+	font-weight: 500;
+}
+body a:hover {
+
+}
+.btn-suncorp {
+	background-color: #eaeaea;
+	border: 1px solid #eaeaea;
+	color: #006f66;
+	font-weight: 500;
+}
+.btn-fixed {
+	width: 280px;
+}
+.jumbotron {
+	background-color: #006f66;
+	color: #fff;
+	margin-top: -30px;
+}
+.jumbotron p {
+	font-family: 'Raleway', sans-serif;
+}
+.jumbotron h1 {
+	font-family: 'Tauri', sans-serif;
+}
+.jumbotron a {
+	color: #fff;
+	text-decoration: underline;
+}
+.table-striped >tbody > tr:nth-child(odd)>td {
+	background-color: #E2EDEC;
+
+
+	}
