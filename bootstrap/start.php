@@ -26,7 +26,8 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('your-machine-name'),
+	'local' => array('Rhyss-MacBook-Air.local'),
+	'production' => array('ip-10-241-42-17')
 
 ));
 
