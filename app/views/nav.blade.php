@@ -10,6 +10,7 @@
 						Signed in as {{Auth::user()->email}} <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
+						<li><a href="{{URL::route('user.show', array('id'=>Auth::user()->username))}}">My Profile</a></li>
 						@if (Auth::user()->is_lister)
 						<li><a href="{{URL::route('jobs.my')}}">My Jobs</a></li>
 						@endif
@@ -25,16 +26,8 @@
 					<a href="#signinModal" data-toggle="modal">Sign in</a>
 
 				</li>
-				<li class='dropdown'>
-					<a class='dropdown-toggle' data-toggle='dropdown'>
-						Create Account
-					</a>
-
-					<ul class="dropdown-menu">
-						<li><a href="{{URL::route('join-tower')}}">I tow vehicles, and need jobs</a></li>
-			  			<li><a href="{{URL::route('join-lister')}}">I need vehicles towed</a></li>
-					</ul>
-
+				<li>
+					<a href="#createAccountModal" data-toggle='modal'>Create Account</a>
 				</li>
 				<li>{{link_to_action('UsersController@create','To Dos')}}</li>
 			@endif
@@ -42,6 +35,24 @@
 		</ul>
 	</div>
 </div>
+<div class="modal fade" id='createAccountModal'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Create Account</h4>
+      </div>
+      <div class='modal-body'>
+      		<fieldset class="well">	
+			<p>Create an account for free to list jobs, or view and start bidding on active jobs.
+			  <p style="text-align: right; padding-top: 24px;"><a class="btn btn-suncorp btn-center btn-fixed" role="button" href="/join-tower">I tow vehicles, and need jobs</a><br><br>
+			  <a class="btn btn-suncorp btn-fixed" role="button" href="/join-lister">I need vehicles towed</a></p>
+			</fieldset>		
+		</div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id='signinModal'>
   <div class="modal-dialog">
     <div class="modal-content">
@@ -71,7 +82,6 @@
     </div>
   </div>
 </div>
-
 
 	<script>
 	$(function(){

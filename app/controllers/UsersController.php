@@ -130,9 +130,19 @@ public function __construct() {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($email)
+	public function show($username)
 	{
 		//
+		$user = User::where('username',$username)->first();
+		$logged_in_user = Auth::user();
+
+		if($user){
+			return View::make('users.view')->with(array('user'=>$user, 'logged_in_user'=>$logged_in_user));
+		}
+		else{
+			return Response::make('Could not find that user.', 404);
+		}
+
 	}
 
 	/**
