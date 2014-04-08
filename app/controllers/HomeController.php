@@ -17,7 +17,7 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-		$jobs = Job::all()->take(5);
+		$jobs = Job::running()->get()->take(5);
 		return View::make('hello')->with('jobs',$jobs);
 	}
 

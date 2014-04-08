@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeController@showWelcome');
 
+Route::get('signin', array('as'=>'signin', 'uses' => 'HomeController@showWelcome'));
 Route::post('signin', array('as'=>'signin', 'uses' => 'SessionsController@store'));
 Route::post('signout', array('as'=>'signout', 'uses' => 'SessionsController@destroy'));
 Route::get('signout', array('as'=>'signout', 'uses' => 'SessionsController@destroy'));

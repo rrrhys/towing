@@ -3,7 +3,11 @@
 Bids on job to postcode {{$job->dropoff_postcode}} <small><a href="{{URL::route('jobs.my')}}">Back to jobs</a></small>
 @stop
 @section('content')
-
+<h4>Job information</h4>
+<ul><li>
+This job has been listed by {{$job->owner->clickable_email}}.</li>
+<li>A {{$job->vehicle_make}} {{$job->vehicle_model}} needs to be towed from {{$job->pickup_postcode}} to {{$job->dropoff_postcode}} (a distance of approx. {{$job->distance_approx}} km)</li>
+</ul>
 <h4>Time remaining</h4>
 @if(!$job->finished)
 This job will close <span class='timeago' title="{{$job->utc}}"></span> ({{$job->finishes_at}})
@@ -12,18 +16,33 @@ This job has finished.
 @endif
 <h4>Current Status</h4>
 @if($job->lowest_bid)
-The current lowest bid is ${{$job->lowest_bid->amount}} by user {{$job->lowest_bid->owner->clickable_email}}
+	@if($job->finished)
+	{{$job->lowest_bid->owner->clickable_email}} won this job.
+	@else
+	The current lowest bid is ${{$job->lowest_bid->amount}} by user {{$job->lowest_bid->owner->clickable_email}}
+	@endif
+
+
 @else
-There is currently no lowest bid.
+	@if($job->finished)
+		@if($user && $user->id == $job->owner->id)
+			This job finished with no bids. You can [Relist] it.
+		@else
+			There were no bids on this job.
+		@endif
+	@else
+		There are currently no bids on this job.
+	@endif
+
 
 @endif
 
-
+@if(!$job->finished)
 <h4>Place Bid</h4>
 {{Form::model($bid, array('route'=>array('bids.store',$job->id)))}}
 
 <fieldset class='well'>
-
+<div class='grayed_out'>You need to be signed in to place a bid. <a href="{{URL::route('signin')}}">Sign in</a></div>
 {{Form::label('amount')}}
 {{Form::text('amount',$bid->amount,array('class'=>'form-control'))}}
 {{Form::label('termsOfBid','Terms of Bid')}}
@@ -33,6 +52,7 @@ There is currently no lowest bid.
 </fieldset>
 
 {{Form::close()}}
+@endif
 
 <h4>Bids placed</h4>
 <table class="table table-bordered table-striped">
@@ -54,7 +74,7 @@ There is currently no lowest bid.
 	<tr><td colspan="6">There are no bids!</td></tr>
 @endif
 </table>
-<?php $user = Auth::user() ?>
+
 @if($user && $user->is_tower)
 	<a href="{{URL::route('bids.create',array($job->id))}}" class='btn btn-primary'>Place Bid</a>
 @endif

@@ -28,7 +28,7 @@ class JobsController extends \BaseController {
 		$bid = new Bid();
 		$terms = View::make('terms.createBidTermsAndConditions');
 		if($job){
-			return View::Make('jobs.view')->with(array('job'=>$job, 'bid'=>$bid, 'terms'=>$terms));
+			return View::Make('jobs.view')->with(array('job'=>$job, 'bid'=>$bid, 'terms'=>$terms,'user'=>Auth::User()));
 		}else{
 			return Response::make("Couldn't find that job.",404);
 		}
@@ -45,7 +45,7 @@ class JobsController extends \BaseController {
 	}
 
 	public function browse($sort_column="finishes_at", $sort_direction="asc"){
-		$jobs = Job::all();
+		$jobs = Job::running()->orderBy($sort_column)->get();
 		if(Request::ajax()){
 			return $jobs->orderBy($sort_column, $sort_direction)->toJson();
 		}else{

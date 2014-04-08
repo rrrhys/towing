@@ -47,7 +47,7 @@
 	 	<div class='panel panel-info'>
 	 		<div class='panel-heading'>Browse Listings</div>
 	 		<div class='panel-body'>
-				<table class="table table-striped">
+				<table class="table table-striped table-hover">
 				@include('jobs.partial.tableheader')
 				@include('jobs.partial.table')
 				@if($jobs->count() == 0)

@@ -1,5 +1,5 @@
 @foreach($jobs as $job)
-	<tr>
+	<tr class='clickableRow' href='{{URL::route('job',array($job->id))}}'>
 		<td>{{$job->finished ? "Finished at " . $job->finishes_at : $job->finishes_at}} </td>
 		<td title="View Bids">
 			<a href="{{URL::route('job', array($job->id))}}">{{$job->current_bid}}</a>

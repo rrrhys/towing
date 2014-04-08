@@ -21,4 +21,9 @@ $(function(){
 jQuery.timeago.settings.allowFuture = true;
 $(".timeago").timeago();
 
+//make table rows clickable.
+$(".clickableRow").click(function(){
+	window.document.location = $(this).attr('href');
+})
+
 });

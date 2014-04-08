@@ -24,5 +24,20 @@
 <h3>@yield('title')</h3>
  @yield('content')
 </div>
+
+
+
+<script type="text/javascript">
+    var queries = {{ json_encode(DB::getQueryLog()) }};
+    console.log('/****************************** Database Queries ******************************/');
+    console.log(' ');
+    $.each(queries, function(id, query) {
+        console.log('   ' + query.time + ' | ' + query.query + ' | ' + query.bindings[0]);
+    });
+    console.log(' ');
+    console.log('/****************************** End Queries ***********************************/');
+</script>
+
+
 </body>
 </html>
