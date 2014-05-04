@@ -11,6 +11,10 @@
 |
 */
 
+/*dev related routes */
+Route::get('seed','DevController@seed');
+
+
 Route::get('/', 'HomeController@showWelcome');
 
 Route::get('signin', array('as'=>'signin', 'uses' => 'HomeController@showWelcome'));

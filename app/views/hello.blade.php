@@ -52,7 +52,7 @@
 				@include('jobs.partial.table')
 				@if($jobs->count() == 0)
 					<tr><td colspan="10">There are no jobs matching your criteria.
-						@if($user->is_lister):
+						@if(isset($user) && $user->is_lister):
 							<a href="{{URL::route('jobs.create')}}">List one</a>
 						@endif
 						</td></tr>
