@@ -12,6 +12,12 @@ class Job extends \Eloquent {
         return $query->where('finishes_at','>',Carbon::now()->toDateTimeString());
     }
 
+    public function scopeFinished($query){
+
+        return $query->where('finishes_at','<',Carbon::now()->toDateTimeString());
+    }
+
+
     public function job_type(){
     	return $this->hasOne('JobType','job_type_id');
     }
@@ -43,9 +49,11 @@ class Job extends \Eloquent {
     }
 
     public function addBid($amount, $user){
+        $return_value = array('result'=>'false','messages' => array());
         if($this->finished){
-            return false;
-        }else
+            $return_value['messages'][] = "The listing has already finished.";
+        }
+        else
         {
             $bid = Bid::create(array('amount'=>$amount, 'user_id'=>$user->id, 'job_id'=>$this->id));
             
@@ -54,12 +62,19 @@ class Job extends \Eloquent {
             if($bid->id != $lowestCurrentBid->id){
                 //invalid, too high.
                 $bid->delete();
+                $return_value['messages'][] = "The bid was too high.";
+            }
+            else{
+                $this->current_bid =$lowestCurrentBid->amount;
+                $this->save(); 
+                $return_value['messages'][] = "The bid was saved. You are the current highest bidder.";     
+                $return_value['result'] = true;                 
             }
 
 
-            $this->current_bid =$lowestCurrentBid->amount;
-            $this->save();            
+
         }
+        return $return_value;
 
 
     }

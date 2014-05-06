@@ -17,6 +17,7 @@ h4 {
 	font-size: 18px;
 	color: #006f66;
 	font-family: 'Raleway', sans-serif;	
+
 }
 form {
 	position:relative; /*Allow popovers in place.*/
@@ -53,6 +54,9 @@ form {
 	font-size: 12px;
 	background-color: #fefefe;
 }
+.navbar-fixed-top a {
+	text-decoration: none;
+}
 .dropdown-menu {
 	text-transform: none;
 }
@@ -76,15 +80,17 @@ fieldset {
 body a {
 	color: #006f66;
 	font-weight: 500;
+	text-decoration: underline;
 }
 body a:hover {
 
 }
 .btn-suncorp {
 	background-color: #eaeaea;
-	border: 1px solid #eaeaea;
+	border: 1px solid #eeeeee;
 	color: #006f66;
 	font-weight: 500;
+	text-decoration: none;
 }
 .btn-fixed {
 	width: 280px;
@@ -111,4 +117,12 @@ body a:hover {
 	}
 tr.clickableRow {
 	cursor: pointer;
+}
+
+.terms-and-conditions {
+
+}
+
+h4 .btn-suncorp {
+	margin-bottom: 20px;
 }

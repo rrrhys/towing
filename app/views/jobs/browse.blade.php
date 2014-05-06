@@ -3,7 +3,7 @@
 Browse Jobs 
 <?php $user = Auth::user() ?>
 @if($user && $user->is_lister)
-<small><a href="{{URL::route('jobs.create')}}">List a new job</a></small>
+<small></small>
 @endif
 @stop
 @section('page_title')Browse Jobs
@@ -22,7 +22,9 @@ Browse Jobs
  		 	</select>
  		  kms of <input type="text" id='base_postcode' name='base_postcode' style='float:none;padding: 0;width: 40px;'> only
  	</div>
- 	<div class='col-md-10'><h4>Available jobs</h4>
+ 	<div class='col-md-10'>
+
+ 		<h4>Available jobs 	<a href="{{URL::route('jobs.create')}}" class='btn btn-suncorp pull-right'>List a new job</a></h4> 
 <table class="table table-striped table-hover">
 @include('jobs.partial.tableheader')
 @include('jobs.partial.table')

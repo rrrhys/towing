@@ -1,6 +1,6 @@
 @extends('layout')
 @section('title')
-Bids on job to postcode {{$job->dropoff_postcode}} <small><a href="{{URL::route('jobs.my')}}">Back to jobs</a></small>
+Job to postcode {{$job->dropoff_postcode}} <small><a href="{{URL::route('jobs.my')}}">Back to jobs</a></small>
 @stop
 @section('content')
 <h4>Job information</h4>
@@ -17,7 +17,7 @@ This job has finished.
 <h4>Current Status</h4>
 @if($job->lowest_bid)
 	@if($job->finished)
-	{{$job->lowest_bid->owner->clickable_email}} won this job.
+	User {{$job->lowest_bid->owner->clickable_email}} had the lowest bid for this job. You should <a href="{{URL::route('job.approve')->with('id',$job->id)}}">approve the job</a>.
 	@else
 	The current lowest bid is ${{$job->lowest_bid->amount}} by user {{$job->lowest_bid->owner->clickable_email}}
 	@endif
@@ -42,11 +42,13 @@ This job has finished.
 {{Form::model($bid, array('route'=>array('bids.store',$job->id)))}}
 
 <fieldset class='well'>
-<div class='grayed_out'>You need to be signed in to place a bid. <a href="{{URL::route('signin')}}">Sign in</a></div>
+@if(!Auth::check())
+	<div class='grayed_out' style='padding-top: 80px;'>You need to be signed in to place a bid. <a href="{{URL::route('signin')}}">Sign in</a></div>
+@endif
 {{Form::label('amount')}}
 {{Form::text('amount',$bid->amount,array('class'=>'form-control'))}}
 {{Form::label('termsOfBid','Terms of Bid')}}
-	<textarea class="col-xs-12 form-control">{{$terms}}</textarea>
+	<textarea class="col-xs-12 form-control terms-and-conditions">{{$terms}}</textarea>
 <br>
 			{{Form::submit('Place bid',array('class'=>'btn btn-default'))}}
 </fieldset>

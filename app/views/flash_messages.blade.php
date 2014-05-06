@@ -1,4 +1,4 @@
-<?php $success = Session::get('success'); ?>
+<?php $success =  Session::get('success'); ?>
 @if ($success)
 <div class='alert alert-success'>
 	{{$success}}
@@ -6,7 +6,7 @@
 @endif
 
 
-<?php $error = Session::get('error'); ?>
+<?php $error =  Session::get('error'); ?>
 @if ($error)
 <div class='alert alert-danger'>
 	{{$error}}

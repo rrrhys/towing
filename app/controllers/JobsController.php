@@ -23,6 +23,20 @@ class JobsController extends \BaseController {
 			//return Response::make("You need to belong to a corporate account to do that.",401);
 		}
 	}
+
+	// The user who listed this job can approve it to go ahead.
+	public function approve($id){
+		$user = Auth::user();
+		$job = $user->jobs()->where('id',$id)->first();
+		if(!$job){
+			return Response::make("You are not authorised to approve this job.",404);
+		}
+		if(!$job->finished){
+			return Response::make("This job is not finished - you cannot approve it yet.",404);
+		}
+		echo "OK.";
+		echo $job->finished;
+	}
 	public function view($id){
 		$job = Job::where('id','=',$id)->first();
 		$bid = new Bid();
@@ -57,9 +71,25 @@ class JobsController extends \BaseController {
 		if($job){
 		//work on saving bid.
 			$amount = Input::get('amount');
-			$user = Auth::user();
-			$job->addBid($amount, $user);
-			return Redirect::to('job',array('id'=>$job->id));
+			if(!is_numeric($amount)){
+				Session::flash('error', 'Please enter a number!');
+				return Redirect::route('job',array('id'=>$job->id));
+			}
+			else
+			{
+				$amount = (float)$amount;
+				$user = Auth::user();
+				$bidResult = $job->addBid($amount, $user);
+				if($bidResult['result'] == 'true'){
+					Session::flash('success', $bidResult['messages'][0]);
+				}
+				else{
+					Session::flash('error', $bidResult['messages'][0]);
+				}
+				
+				return Redirect::route('job',array('id'=>$job->id));		
+			}
+
 		}else{
 			return Response::make("Couldn't find that job.",404);
 		}		

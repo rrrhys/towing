@@ -16,6 +16,9 @@ $(function(){
 		e.preventDefault();
 	});
 
+	//disable terms and conditions boxes.
+	$(".terms-and-conditions").attr('disabled','disabled');
+
 
 //attach timeago.
 jQuery.timeago.settings.allowFuture = true;

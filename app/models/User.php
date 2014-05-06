@@ -80,6 +80,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function bids(){
 		return $this->hasMany('Bid','user_id','id');
 	}
+	public function jobs_bid_on(){
+		$jobs = array();
+		$bids = $this->bids;
+		foreach($bids as $bid){
+			echo $bid->id;
+			$job = $bid->job;
+			if(!in_array($job,$jobs)){
+				$jobs[] =$job;
+			}
+		}
+		return $jobs;
+	}
 
 	public function user_details(){
 		return $this->hasOne('UserDetail');
