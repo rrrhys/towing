@@ -60,7 +60,7 @@ class Job extends \Eloquent {
             'to_address'=>$job->lowest_bid->owner->email,
             'to_name'=>$job->lowest_bid->owner->username,
             "You won a job!",
-            'email'=>'emails.YouWonAJob');
+            'email'=>'emails.YouWonAJob'));
     }
     public function addBid($amount, $user){
         $return_value = array('result'=>'false','messages' => array());
