@@ -41,13 +41,27 @@ class Job extends \Eloquent {
     {
         return $this->finishes_at < Carbon::now();
     }
+    public function getAwardedAttribute()
+    {
+        return $this->finishes_at != null;
+    }
     public function getLowestBidAttribute(){
         return $this->bids()->orderBy('amount','asc')->first();
     }
     public function getDistanceApproxAttribute(){
         return "XX";
     }
+    public function AwardToLowestBidder(){
+        $this->awarded_at = Carbon::now();
+        $this->save();
 
+        //fire off an email about it.
+        Queue::push('SendEmail',array(
+            'to_address'=>$job->lowest_bid->owner->email,
+            'to_name'=>$job->lowest_bid->owner->username,
+            "You won a job!",
+            'email'=>'emails.YouWonAJob');
+    }
     public function addBid($amount, $user){
         $return_value = array('result'=>'false','messages' => array());
         if($this->finished){

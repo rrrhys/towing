@@ -4,9 +4,22 @@ Job to postcode {{$job->dropoff_postcode}} <small><a href="{{URL::route('jobs.my
 @stop
 @section('content')
 <h4>Job information</h4>
+		@if($job->owner == Auth::user() && $job->finished)
+			@if($job->awarded)
+				<div class='alert alert-success alert-dismissable'>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					This job was awarded to {{$job->lowest_bid->owner->clickable_email}}.
+				</div>
+			@else
+				<div class='alert alert-info alert-dismissable'>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					You should <a href="#approveModal" data-toggle='modal'>approve this job</a> so the winner can prepare to pick up your vehicle.
+				</div>
+			@endif
+		@endif
 <ul><li>
 This job has been listed by {{$job->owner->clickable_email}}.</li>
-<li>A {{$job->vehicle_make}} {{$job->vehicle_model}} needs to be towed from {{$job->pickup_postcode}} to {{$job->dropoff_postcode}} (a distance of approx. {{$job->distance_approx}} km)</li>
+<li>A <strong>{{$job->vehicle_make}} {{$job->vehicle_model}}</strong> needs to be towed from <strong>{{$job->pickup_postcode}} to {{$job->dropoff_postcode}}</strong> (a distance of approx. {{$job->distance_approx}} km)</li>
 </ul>
 <h4>Time remaining</h4>
 @if(!$job->finished)
@@ -17,16 +30,19 @@ This job has finished.
 <h4>Current Status</h4>
 @if($job->lowest_bid)
 	@if($job->finished)
-	User {{$job->lowest_bid->owner->clickable_email}} had the lowest bid for this job. You should <a href="{{URL::route('job.approve')->with('id',$job->id)}}">approve the job</a>.
+	User {{$job->lowest_bid->owner->clickable_email}} had the lowest bid for this job. 
+		@if($job->owner == Auth::user() && !$job->awarded)
+		You should <a href="" data-toggle='modal'>approve the job</a>.
+		@endif
 	@else
-	The current lowest bid is ${{$job->lowest_bid->amount}} by user {{$job->lowest_bid->owner->clickable_email}}
+	The current lowest bid is ${{$job->lowest_bid->amount}} by {{$job->lowest_bid->owner->clickable_email}} at <span class='timeago' title="{{$job->lowest_bid->utc}}"></span>
 	@endif
 
 
 @else
 	@if($job->finished)
 		@if($user && $user->id == $job->owner->id)
-			This job finished with no bids. You can [Relist] it.
+			This job finished with no bids. You should <a href="{{URL::route('job.relist',array($job->id))}}">relist the job</a>.
 		@else
 			There were no bids on this job.
 		@endif
@@ -83,4 +99,25 @@ This job has finished.
 @if(!$user)
 	You need to be logged in to place a bid.
 @endif
+
+<div class="modal fade" id='approveModal'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Approve job</h4>
+      </div>
+      <div class='modal-body'>
+      		<fieldset class="well">	
+      		{{Form::open(array('route'=>array('job.approved',$job->id),'id'=>'approveJob'))}}
+			<p>Clicking 'Approve' below indicates you agree to pay <strong>${{$job->lowest_bid->amount}}</strong> to {{$job->lowest_bid->owner->clickable_email}} on completion of the job.<h3>Do you agree?</h3>
+			  <p style="text-align: right; padding-top: 24px;"><a class="btn btn-primary btn-center btn-fixed" role="button" href="#" onClick="document.getElementById('approveJob').submit();">YES, approve job</a><br><br>
+			  <a href="#"  data-dismiss="modal">No, cancel</a></p>
+			{{Form::close()}}
+			</fieldset>		
+		</div>
+    </div>
+  </div>
+</div>
+
 @stop

@@ -25,7 +25,7 @@ class JobsController extends \BaseController {
 	}
 
 	// The user who listed this job can approve it to go ahead.
-	public function approve($id){
+	public function approved($id){
 		$user = Auth::user();
 		$job = $user->jobs()->where('id',$id)->first();
 		if(!$job){
@@ -34,7 +34,23 @@ class JobsController extends \BaseController {
 		if(!$job->finished){
 			return Response::make("This job is not finished - you cannot approve it yet.",404);
 		}
-		echo "OK.";
+
+		$job->AwardToLowestBidder();
+
+		Session::flash('success','The job has been awarded.');
+		return Redirect::route('job',array('id'=>$job->id));
+	}
+	// The user who listed this job can relist it if it finished with no bids.
+	public function relist($id){
+		$user = Auth::user();
+		$job = $user->jobs()->where('id',$id)->first();
+		if(!$job){
+			return Response::make("You are not authorised to relist this job.",404);
+		}
+		if(!$job->finished){
+			return Response::make("This job is not finished - you cannot relist it yet.",404);
+		}
+		echo "TODO.";
 		echo $job->finished;
 	}
 	public function view($id){

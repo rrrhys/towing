@@ -132,6 +132,7 @@ public function __construct() {
 	 */
 	public function show($username)
 	{
+
 		//
 		$user = User::where('username',$username)->first();
 		$jobs = $user->jobs_bid_on();

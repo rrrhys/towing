@@ -13,7 +13,7 @@ class AddAwardedAtToJobs extends Migration {
 	public function up()
 	{
 		Schema::table('jobs', function(Blueprint $table) {
-			$table->timestamp('awarded_at');
+			$table->timestamp('awarded_at')->nullable();;
 		});
 	}
 

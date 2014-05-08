@@ -12,4 +12,7 @@ class Bid extends \Eloquent {
     public function owner(){
     	return $this->belongsTo('User','user_id','id');
     }
+    public function getUtcAttribute(){
+        return $this->created_at->toISO8601String();
+    }
 }

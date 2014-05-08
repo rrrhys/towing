@@ -33,6 +33,12 @@ form {
 	color: #fff;
 	font-weight: 500;
 }
+
+.alert-info {
+	border: 1px solid #006f66;
+	color: #006f66;
+}
+
 .btn-lgr {
 padding: 20px 16px;
 font-size: 18px;
@@ -85,6 +91,9 @@ body a {
 body a:hover {
 
 }
+.btn {
+	text-decoration: none;
+}
 .btn-suncorp {
 	background-color: #eaeaea;
 	border: 1px solid #eeeeee;
@@ -94,6 +103,12 @@ body a:hover {
 }
 .btn-fixed {
 	width: 280px;
+}
+.btn-primary {
+	background-color: #006f66;
+}
+.btn-primary:hover {
+	background-color: #17867D;
 }
 .jumbotron {
 	background-color: #006f66;

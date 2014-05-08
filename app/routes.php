@@ -57,6 +57,7 @@ Route::get('/jobs/{id}/view_details', array('as'=>'bids.create', 'uses'=>'JobsCo
 Route::post('/jobs/{id}/store_bid', array('as'=>'bids.store', 'uses'=>'JobsController@store_bid'));
 Route::get('/jobs/{id}/', array('as'=>'job', 'uses'=>'JobsController@view'));
 
-Route::get('/jobs/{id}/approve', array('as'=>'job.approve', 'uses'=>'JobsController@approve'));
+Route::post('/jobs/{id}/approve', array('as'=>'job.approved', 'uses'=>'JobsController@approved'));
+Route::get('/jobs/{id}/relist', array('as'=>'job.relist', 'uses'=>'JobsController@relist'));
 
 Route::get('/api_reference', array('as'=>'api','uses'=>'UsersController@api'));

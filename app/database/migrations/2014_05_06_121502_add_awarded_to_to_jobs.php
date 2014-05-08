@@ -13,7 +13,7 @@ class AddAwardedToToJobs extends Migration {
 	public function up()
 	{
 		Schema::table('jobs', function(Blueprint $table) {
-			$table->int('awarded_to');
+			$table->integer('awarded_to');
 		});
 	}
 
