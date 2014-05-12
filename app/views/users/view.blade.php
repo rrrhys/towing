@@ -14,6 +14,9 @@ User information: {{$user->username}}
 		<li>Change password</li>
 		<li>Change other stuff</li>
 	</ul>
+
+		@include('users.partials.contact_details', array('user' => $logged_in_user))
+
 	</div>
 	@endif
 

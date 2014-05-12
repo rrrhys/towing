@@ -2,7 +2,6 @@
 		<fieldset class="well">
 		<div class="row">
 			<div class="col-xs-6">
-
 {{Form::label('user[email]','Email Address')}}
 			{{Form::text('user[email]',$user->email,array('class'=>'form-control'))}}
 				

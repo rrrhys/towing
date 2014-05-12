@@ -136,7 +136,7 @@ public function __construct() {
 		//
 		$user = User::where('username',$username)->first();
 		$jobs = $user->jobs_bid_on();
-		$logged_in_user = Auth::user();
+		$logged_in_user = Auth::user()->load('user_details');
 
 		if($user){
 			return View::make('users.view')->with(array('user'=>$user, 'logged_in_user'=>$logged_in_user,'jobs'=>$jobs));

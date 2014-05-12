@@ -17,8 +17,8 @@ class SendEmail {
     public function fire($job, $data)
     {
         //
-        Log::info("Firing an email to " . $data['to_address']);
-        Mail::send($data['email'], $data, function($message)
+        Log::info("Firing email " . $data['email'] . " to " . $data['to_address']);
+        Mail::send($data['email'], $data['email_fields'], function($message) use ($data)
 		{
 		    $message->to($data['to_address'], $data['to_name'])->subject($data['subject']);
 		});

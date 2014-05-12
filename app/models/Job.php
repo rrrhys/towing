@@ -43,7 +43,7 @@ class Job extends \Eloquent {
     }
     public function getAwardedAttribute()
     {
-        return $this->finishes_at != null;
+        return $this->awarded_at != null;
     }
     public function getLowestBidAttribute(){
         return $this->bids()->orderBy('amount','asc')->first();
@@ -57,10 +57,23 @@ class Job extends \Eloquent {
 
         //fire off an email about it.
         Queue::push('SendEmail',array(
-            'to_address'=>$job->lowest_bid->owner->email,
-            'to_name'=>$job->lowest_bid->owner->username,
-            "You won a job!",
-            'email'=>'emails.YouWonAJob');
+            'email_fields'=>
+                array(
+                        'recipient_name'=>$this->lowest_bid->owner->username,
+                        'sender_name'=>$this->owner->username,
+                        'vehicle_make'=>$this->vehicle_make,
+                        'vehicle_model'=>$this->vehicle_model,
+                        'pickup_postcode'=>$this->$pickup_postcode,
+                        'dropoff_postcode'=>$this->$dropoff_postcode,
+                        'distance_approx'=>$this->$distance_approx,
+                        'pickup_at'=>$this->pickup_at,
+                        'dropoff_at'=>$this->dropoff_at,
+                        'user_details'=>$this->owner->user_details
+                    ),
+            'to_address'=>$this->lowest_bid->owner->email,
+            'to_name'=>$this->lowest_bid->owner->username,
+            'subject'=>"You won a job!",
+            'email'=>'emails.YouWonAJob'));
     }
     public function addBid($amount, $user){
         $return_value = array('result'=>'false','messages' => array());

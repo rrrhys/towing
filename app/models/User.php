@@ -94,7 +94,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	public function user_details(){
+		
 		return $this->hasOne('UserDetail');
+
 		/*if(!$tower_detail){
 			$tower_detail = new TowerDetail(['user_id'=>$this->id]);
 		}
