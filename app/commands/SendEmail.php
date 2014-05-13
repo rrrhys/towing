@@ -16,12 +16,56 @@ class SendEmail {
 */
     public function fire($job, $data)
     {
-        //
-        Log::info("Firing email " . $data['email'] . " to " . $data['to_address']);
-        Mail::send($data['email'], $data['email_fields'], function($message) use ($data)
-		{
-		    $message->to($data['to_address'], $data['to_name'])->subject($data['subject']);
-		});
+			
+        switch($data['email']){
+        	case("emails.YouWonAJob"):
+        		$poster = User::find($data['poster_id']);
+        		$emailBodyData = array(
+					'poster' => $poster,
+					'posterDetails'=>$poster->user_details()->get()->first(),
+					'recipient' => User::find($data['recipient_id']),
+					'job' => Job::find($data['job_id']),
+					'subject' => "You won a job!"
+        			);
+        	break;
+        	case("emails.YourJobFinishedWithBids"):
+        		$job = Job::find($data['job_id']);
+        		$jobLink = URL::route('job', array($job->id));
+        		$winner = $job->lowest_bid->owner;
+        		$recipient =  User::find($data['recipient_id']);
+        		$emailBodyData = array(
+					'recipient' =>$recipient,
+					'recipientDetails'=>$recipient->user_details()->get()->first(),
+					'job' => $job,
+					'jobLink' => $jobLink,
+					'winner' => $winner,
+					'lowest_bid'=> $job->lowest_bid,
+					'subject' => "Your job finished with bids - Please approve."
+        			);
+        		
+
+        	break;
+        	case("emails.YourJobFinishedWithNoBids"):
+        		$job = Job::find($data['job_id']);
+        		$jobLink = URL::route('job', array($job->id));
+        		$recipient =  User::find($data['recipient_id']);
+        		$emailBodyData = array(
+					'recipient' =>$recipient,
+					'recipientDetails'=>$recipient->user_details()->get()->first(),
+					'job' => $job,
+					'jobLink' => $jobLink,
+					'subject' => "Your job finished with NO bids - relist?"
+        			);
+        	break;
+        }
+
+        		Mail::send($data['email'], $emailBodyData, function($message) use ($emailBodyData)
+				{
+				    $message->to(
+				    	$emailBodyData['recipient']->email, 
+				    	$emailBodyData['recipient']->name
+				    	)->subject($emailBodyData['subject']);
+				});
     }
 
 }

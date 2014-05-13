@@ -1,0 +1,8 @@
+Create a cron job to check for finished jobs every minute.
+
+crontab -e
+
+#every 5 minutes
+#* * * * * curl http://localhost/checkForFinishedJobs
+
+#*/5 * * * * curl http://localhost/checkForFinishedJobs

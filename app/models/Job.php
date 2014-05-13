@@ -17,6 +17,11 @@ class Job extends \Eloquent {
         return $query->where('finishes_at','<',Carbon::now()->toDateTimeString());
     }
 
+    public function scopeNotnotified($query){
+
+        return $query->where('finished_notification_sent_at','=',null);
+    }
+
 
     public function job_type(){
     	return $this->hasOne('JobType','job_type_id');
@@ -55,24 +60,12 @@ class Job extends \Eloquent {
         $this->awarded_at = Carbon::now();
         $this->save();
 
-        //fire off an email about it.
+        //fire off an email about it. 
+        Log::info("user info is " . $this->owner->user_details()->get());
         Queue::push('SendEmail',array(
-            'email_fields'=>
-                array(
-                        'recipient_name'=>$this->lowest_bid->owner->username,
-                        'sender_name'=>$this->owner->username,
-                        'vehicle_make'=>$this->vehicle_make,
-                        'vehicle_model'=>$this->vehicle_model,
-                        'pickup_postcode'=>$this->$pickup_postcode,
-                        'dropoff_postcode'=>$this->$dropoff_postcode,
-                        'distance_approx'=>$this->$distance_approx,
-                        'pickup_at'=>$this->pickup_at,
-                        'dropoff_at'=>$this->dropoff_at,
-                        'user_details'=>$this->owner->user_details
-                    ),
-            'to_address'=>$this->lowest_bid->owner->email,
-            'to_name'=>$this->lowest_bid->owner->username,
-            'subject'=>"You won a job!",
+            'poster_id'=>$this->owner->id,
+            'recipient_id'=>$this->lowest_bid->owner->id,
+            'job_id'=>$this->id,
             'email'=>'emails.YouWonAJob'));
     }
     public function addBid($amount, $user){

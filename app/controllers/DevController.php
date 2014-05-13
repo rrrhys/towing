@@ -1,10 +1,30 @@
 <?php
 
 use Faker\Factory as Faker;
+use Carbon\Carbon;
 class DevController extends \BaseController {
 
 
+    public function checkForFinishedJobs(){
+        Log::info("Check for finished job ran.");
+        
+        $jobs = Job::finished()->notnotified()->get();
 
+        foreach($jobs as $job){
+            if($job->lowest_bid){
+                // this job finished with bids.
+                Queue::push('SendEmail',array(
+                    'recipient_id'=>$job->owner->id,
+                    'job_id'=>$job->id,
+                    'email'=>'emails.YourJobFinishedWithBids'));
+                $job->finished_notification_sent_at = Carbon::now();
+                $job->save();
+                }
+            else{
+                // this job finished with no bids.
+            }
+        }
+    }
 
 	public function seed(){
 		Queue::push(function(){

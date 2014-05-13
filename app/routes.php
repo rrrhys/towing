@@ -14,6 +14,9 @@
 /*dev related routes */
 Route::get('seed','DevController@seed');
 
+/*Cron related routes */
+Route::get('checkForFinishedJobs','DevController@checkForFinishedJobs');
+
 
 Route::get('/', 'HomeController@showWelcome');
 
