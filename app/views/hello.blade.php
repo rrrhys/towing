@@ -15,7 +15,7 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<div class="panel panel-info">
+		<div class="panel panel-info suncorp">
 			<div class="panel-heading">Create an account</div>
 			<div class="panel-body">
 			<p>Create an account for free to list jobs, or view and start bidding on active jobs.
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-		<div class="panel panel-info">
+		<div class="panel panel-info suncorp">
 			<div class="panel-heading">Sign in</div>
 			<div class="panel-body">
 				<span class="login_validation_error"></span>
@@ -44,7 +44,7 @@
  </div>
  <div class="row">
  	<div class='col-md-12'>
-	 	<div class='panel panel-info'>
+	 	<div class='panel panel-info suncorp'>
 	 		<div class='panel-heading'>Browse Listings</div>
 	 		<div class='panel-body'>
 				<table class="table table-striped table-hover">

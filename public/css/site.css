@@ -11,7 +11,11 @@ label {
 h3 {
 	font-size: 22px;
 	color: #006f66;
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Helvetica','Calibri','Arial';
+	font-weight: bold;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 8px;
+	width: 100%;
 }
 h4 {
 	font-size: 18px;
@@ -69,19 +73,25 @@ form {
 fieldset {
 	padding-bottom: 20px;
 }
-.panel .panel-heading {
+.panel.suncorp .panel-heading {
 	/*suncorp colours*/
 	color: #006f66;
 	font-weight: bold;
-	background-color:#fff;
+	background-color:#fafafa;
 	border-color: #4DBCB3;
 }
-.panel {
+.panel.suncorp {
 	border-color: #4DBCB3;
 }
 .panel-popout {
 	background-color: #006f66;
 	color: #fff;
+}
+a.list-group-item  {
+	text-decoration: none;
+}
+a.list-group-item.active {
+	background-color: #006f66;
 }
 body a {
 	color: #006f66;

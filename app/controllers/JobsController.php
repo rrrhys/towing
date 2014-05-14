@@ -37,7 +37,6 @@ class JobsController extends \BaseController {
 
 		$job->AwardToLowestBidder();
 
-		Session::flash('success');
 		return Redirect::route('job',array('id'=>$job->id));
 	}
 	// The user who listed this job can relist it if it finished with no bids.

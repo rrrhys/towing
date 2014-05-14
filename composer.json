@@ -7,7 +7,8 @@
 		"laravel/framework": "4.1.*",
 		"mccool/laravel-auto-presenter": "*",
 		"loic-sharma/profiler": "1.1.*",
-		"pda/pheanstalk": "dev-master"
+		"pda/pheanstalk": "dev-master",
+		"laracasts/presenter": "0.1.*"
 	},
 	"require-dev": {
 		"way/generators": "2.*",

@@ -1,6 +1,13 @@
 <?php
 use Carbon\Carbon;
+use Laracasts\Presenter\PresentableTrait;
 class Job extends \Eloquent {
+
+    use PresentableTrait;
+
+    protected $presenter = 'JobPresenter';
+
+    
 	protected $table = "jobs";
 	protected $softDelete = true;
 	protected $hidden = [];
