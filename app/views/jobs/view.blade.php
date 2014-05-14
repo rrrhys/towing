@@ -3,6 +3,22 @@
 Job to postcode {{$job->dropoff_postcode}} <small><a href="{{URL::route('jobs.my')}}">Back to jobs</a></small>
 @stop
 @section('content')
+
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBscBtAvr786h6pIw-7W2Kh7VftgoDyEcM&sensor=false">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
 <h4>Job information</h4>
 		@if($job->owner == Auth::user() && $job->finished)
 			@if($job->awarded)
@@ -21,6 +37,9 @@ Job to postcode {{$job->dropoff_postcode}} <small><a href="{{URL::route('jobs.my
 This job has been listed by {{$job->owner->clickable_email}}.</li>
 <li>A <strong>{{$job->vehicle_make}} {{$job->vehicle_model}}</strong> needs to be towed from <strong>{{$job->pickup_postcode}} to {{$job->dropoff_postcode}}</strong> (a distance of approx. {{$job->distance_approx}} km)</li>
 </ul>
+
+<div id="map-canvas"/>
+
 <h4>Time remaining</h4>
 @if(!$job->finished)
 This job will close <span class='timeago' title="{{$job->utc}}"></span> ({{$job->finishes_at}})

@@ -19,7 +19,7 @@ class JobPresenter extends Presenter {
 		{
 			$outString .= "{$diff->h}h {$diff->i}m";
 		}
-		$outString .= "(" . $this->finishes_at->addHours(10)->format('l g.ia'). ")";
+		$outString .= " (" . $this->finishes_at->addHours(10)->format('l g.ia'). ")";
 		return $outString;
 	}
 }
