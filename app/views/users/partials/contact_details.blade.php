@@ -1,4 +1,3 @@
-<h4>Contact Details</h4>
 		<fieldset class="well">
 		<div class="row">
 			<div class="col-xs-6">

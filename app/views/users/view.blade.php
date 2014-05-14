@@ -11,8 +11,8 @@ User information: {{$user->username}}
 	 	<div class="list-group">
 		  <a href="#" class='list-group-item active'>Public Profile</a>
 		  <a href="#" class='list-group-item'>Statistics</a>
-		  <a href="#" class='list-group-item'>Contact Details</a>
-		  <a href="#" class='list-group-item'>Messages</a>
+		  <a href="#contact-details" class='list-group-item' data-toggle='tab'>Contact Details</a>
+		  <a href="#user-information" class='list-group-item' data-toggle='tab'>User Information</a>
 		</div>
 	</div>
 
@@ -30,28 +30,35 @@ User information: {{$user->username}}
  			</div>
  		</div>
 
- 		<div class="panel panel-default">
- 			<div class="panel-heading">
- 				Contact Details
- 			</div>
- 			<div class="panel-body">
-				@include('users.partials.contact_details', array('user' => $logged_in_user))
- 			</div>
- 		</div>
+ 		<div class='tab-content'>
+	 		<div class='tab-pane' id='contact-details'>
+		 		<div class="panel panel-default">
+		 			<div class="panel-heading">
+		 				Contact Details
+		 			</div>
+		 			<div class="panel-body">
+						@include('users.partials.contact_details', array('user' => $logged_in_user))
+		 			</div>
+		 		</div>
+		 	</div>
+		 	<div class='tab-pane' id='user-information'>
+				<div class="panel panel-default">
+		 			<div class="panel-heading">
+		 				User information
+		 			</div>
+		 			<div class="panel-body">
+						<ul>
+							<li>This user has bid on {{count($jobs)}} jobs.</li>
+							<li>This user has successfully placed {{$user->bids->count()}} bids.</li>
+							<li>This user has listed {{$user->jobs->count()}} jobs.</li>
+							<li>This user has {{$user->jobs()->running()->count()}} active jobs.</li>
+						</ul>
+					</div>
+		 		</div>
+		 	</div>
+		 </div>
 
- 		<div class="panel panel-default">
- 			<div class="panel-heading">
- 				User information
- 			</div>
- 			<div class="panel-body">
-				<ul>
-					<li>This user has bid on {{count($jobs)}} jobs.</li>
-					<li>This user has successfully placed {{$user->bids->count()}} bids.</li>
-					<li>This user has listed {{$user->jobs->count()}} jobs.</li>
-					<li>This user has {{$user->jobs()->running()->count()}} active jobs.</li>
-				</ul>
-			</div>
- 		</div>
+
 
 	@if($logged_in_user && $user->id == $logged_in_user->id)
  		<div class="panel panel-default">

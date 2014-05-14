@@ -38,7 +38,6 @@ This job has been listed by {{$job->owner->clickable_email}}.</li>
 <li>A <strong>{{$job->vehicle_make}} {{$job->vehicle_model}}</strong> needs to be towed from <strong>{{$job->pickup_postcode}} to {{$job->dropoff_postcode}}</strong> (a distance of approx. {{$job->distance_approx}} km)</li>
 </ul>
 
-<div id="map-canvas"/>
 
 <h4>Time remaining</h4>
 @if(!$job->finished)
@@ -54,7 +53,7 @@ This job has finished.
 		You should <a href="" data-toggle='modal'>approve the job</a>.
 		@endif
 	@else
-	The current lowest bid is ${{$job->lowest_bid->amount}} by {{$job->lowest_bid->owner->clickable_email}} at <span class='timeago' title="{{$job->lowest_bid->utc}}"></span>
+	The current lowest bid is ${{$job->lowest_bid->amount}} by {{$job->lowest_bid->owner->clickable_email}} <span class='timeago' title="{{$job->lowest_bid->utc}}"></span>
 	@endif
 
 
@@ -111,6 +110,9 @@ This job has finished.
 	<tr><td colspan="6">There are no bids!</td></tr>
 @endif
 </table>
+
+
+<div id="map-canvas"/>
 
 @if($user && $user->is_tower)
 	<a href="{{URL::route('bids.create',array($job->id))}}" class='btn btn-primary'>Place Bid</a>
