@@ -89,14 +89,21 @@ public function __construct() {
 	public function store()
 	{
 		//
-
-		$validator = Validator::make(Input::get('user'), User::$rules);
-		if(!$validator->passes()){
+		$messages = array(
+		    'required' => "':attribute' is required",
+		);
+		$validatorUser = Validator::make(Input::get('user'), User::$rules,$messages);
+		$validatorUserDetails =  Validator::make(Input::get('user_details'), UserDetail::$rules,$messages);
+		if(!$validatorUser->passes() || !$validatorUserDetails->passes()){
+			$errors = array_merge_recursive(
+                                    $validatorUser->messages()->toArray(), 
+                                    $validatorUserDetails->messages()->toArray()
+                            );
 			if(Input::get('account_type') == 'tower'){
-				return Redirect::route('join-tower')->with('message','Validation errors occurred!')->withErrors($validator)->withInput();
+				return Redirect::route('join-tower')->with('message','Validation errors occurred!')->withErrors($errors)->withInput();
 			}
 			else{
-				return Redirect::route('join-lister')->with('message','Validation errors occurred!')->withErrors($validator)->withInput();
+				return Redirect::route('join-lister')->with('message','Validation errors occurred!')->withErrors($errors)->withInput();
 			}
 		}
 

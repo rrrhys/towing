@@ -58,7 +58,7 @@ class SendEmail {
         			);
         	break;
         }
-
+Log::info("emailing " . $emailBodyData['recipient']->email . " " . $data['email']);
         		Mail::send($data['email'], $emailBodyData, function($message) use ($emailBodyData)
 				{
 				    $message->to(

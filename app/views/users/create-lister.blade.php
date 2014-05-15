@@ -10,7 +10,21 @@ Create new Listing account
 	<div class="col-md-8 col-md-offset-2">
 		@include('users.partials.registration_login_details')
 		@include('users.partials.company_details')
-		@include('users.partials.contact_details')
+
+
+
+<div class='col-md-12'>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Contact Details
+		</div>
+		<div class="panel-body">
+			@include('users.partials.contact_details')
+		</div>
+	</div>
+</div>
+
+
 		
 		{{Form::hidden('account_type','lister')}}
 		<h4>Terms and Conditions</h4>

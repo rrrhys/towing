@@ -20,7 +20,7 @@
 			<div class="panel-body">
 			<p>Create an account for free to list jobs, or view and start bidding on active jobs.
 			  <p style="text-align: right; padding-top: 24px;"><a class="btn btn-suncorp btn-center btn-fixed" role="button" href="/join-tower">I tow vehicles, and need jobs</a><br><br>
-			  <a class="btn btn-suncorp btn-fixed" role="button" href="/join-lister">I need vehicles towed</a></p>
+			  <a class="btn btn-suncorp btn-fixed" role="button" href="/join-lister">I need a vehicle towed</a></p>
 			</div>
 		</div>
 	</div>

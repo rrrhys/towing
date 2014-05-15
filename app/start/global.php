@@ -82,3 +82,7 @@ App::down(function()
 
 
 require app_path().'/filters.php';
+
+Form::macro('validationWrapper', function(){
+	return "<span class='validation_message'>:message</span>";
+});

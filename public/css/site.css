@@ -1,12 +1,14 @@
 body {
-	
 }
 .navbar {
 	font-family: 'Tauri', sans-serif;
 }
 label {
-	width: 180px;
 	margin: 10px;
+	margin-left: 0;
+	font-size: 14px;
+	font-family: 'Arial';
+	color: #5C5C5C;
 }
 h3 {
 	font-size: 22px;
@@ -150,4 +152,22 @@ tr.clickableRow {
 
 h4 .btn-suncorp {
 	margin-bottom: 20px;
+}
+
+
+/*gets applied to the control*/
+.validation_error {
+	background-color: #FFA3A3 !important;
+}
+
+/* occurs beside the label */
+.validation_message {
+	color: #D40F0F;
+	font-weight: bold;
+	float: right;
+	margin-top: 10px;
+	font-size: 10px;
+}
+.validation_message::before {
+	content: "*";
 }
