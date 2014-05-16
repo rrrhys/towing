@@ -23,10 +23,11 @@ class SessionsController extends \BaseController {
 				$session->user_id = $user->id;
 				$session->save();
 				$session->is_admin = $user->is_admin;
-				return Redirect::route('jobs.browse');
+				return Redirect::route('jobs.my');
 		}
 		else{
-			return Response::make('Could not log you in.', 401);
+			Session::flash('error','Could not log you in. Please check your email and password.');
+			return Redirect::route('signin');
 		}
 
 	}

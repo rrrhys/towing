@@ -1,6 +1,6 @@
 @extends('email')
 @section('content')
-Dear {{$poster->username}},<br><br>
+Dear {{$recipient->username}},<br><br>
 <h4>Your job finished with NO bids.</h4>
 
 The job you listed, <strong>{{$job->vehicle_make}} {{$job->vehicle_model}}</strong> towed from <strong>{{$job->pickup_postcode}} to {{$job->dropoff_postcode}}</strong> finished with no bids.

@@ -86,3 +86,9 @@ require app_path().'/filters.php';
 Form::macro('validationWrapper', function(){
 	return "<span class='validation_message'>:message</span>";
 });
+
+
+User::creating(function($user)
+{
+	$user->email_verify_token = str_random(24);
+});

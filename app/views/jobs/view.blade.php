@@ -27,10 +27,17 @@ Job to postcode {{$job->dropoff_postcode}} <small><a href="{{URL::route('jobs.my
 					This job was awarded to {{$job->lowest_bid->owner->clickable_email}}.
 				</div>
 			@else
-				<div class='alert alert-info alert-dismissable'>
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					You should <a href="#approveModal" data-toggle='modal'>approve this job</a> so the winner can prepare to pick up your vehicle.
-				</div>
+				@if($job->lowest_bid)
+					<div class='alert alert-info alert-dismissable'>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						You should <a href="#approveModal" data-toggle='modal'>approve this job</a> so the winner can prepare to pick up your vehicle.
+					</div>
+				@else
+					<div class='alert alert-info alert-dismissable'>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						This job ended with no bids. You can <a href="{{URL::route('job.relist',array($job->id))}}">relist this job</a> if you'd like to try again.
+					</div>				
+				@endif
 			@endif
 		@endif
 <ul><li>
@@ -79,6 +86,9 @@ This job has finished.
 @if(!Auth::check())
 	<div class='grayed_out' style='padding-top: 80px;'>You need to be signed in to place a bid. <a href="{{URL::route('signin')}}">Sign in</a></div>
 @endif
+@if(!Auth::user()->email_verified())
+	<div class='grayed_out' style='padding-top: 80px;'>You need to verify your email to place a bid. <a href="{{URL::route('user.resend_verify')}}">Resend verify email</a></div>
+@endif
 {{Form::label('amount')}}
 {{Form::text('amount',$bid->amount,array('class'=>'form-control'))}}
 {{Form::label('termsOfBid','Terms of Bid')}}
@@ -124,19 +134,21 @@ This job has finished.
 <div class="modal fade" id='approveModal'>
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Approve job</h4>
-      </div>
-      <div class='modal-body'>
-      		<fieldset class="well">	
-      		{{Form::open(array('route'=>array('job.approved',$job->id),'id'=>'approveJob'))}}
-			<p>Clicking 'Approve' below indicates you agree to pay <strong>${{$job->lowest_bid->amount}}</strong> to {{$job->lowest_bid->owner->clickable_email}} on completion of the job.<h3>Do you agree?</h3>
-			  <p style="text-align: right; padding-top: 24px;"><a class="btn btn-primary btn-center btn-fixed" role="button" href="#" onClick="document.getElementById('approveJob').submit();">YES, approve job</a><br><br>
-			  <a href="#"  data-dismiss="modal">No, cancel</a></p>
-			{{Form::close()}}
-			</fieldset>		
+	     <div class="modal-header">
+	       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title">Approve job</h4>
+	     </div>
+	     @if($job->lowest_bid)
+	     <div class='modal-body'>
+	      		<fieldset class="well">	
+	      		{{Form::open(array('route'=>array('job.approved',$job->id),'id'=>'approveJob'))}}
+				<p>Clicking 'Approve' below indicates you agree to pay <strong>${{$job->lowest_bid->amount}}</strong> to {{$job->lowest_bid->owner->clickable_email}} on completion of the job.<h3>Do you agree?</h3>
+				  <p style="text-align: right; padding-top: 24px;"><a class="btn btn-primary btn-center btn-fixed" role="button" href="#" onClick="document.getElementById('approveJob').submit();">YES, approve job</a><br><br>
+				  <a href="#"  data-dismiss="modal">No, cancel</a></p>
+				{{Form::close()}}
+				</fieldset>		
 		</div>
+		@endif
     </div>
   </div>
 </div>

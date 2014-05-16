@@ -26,6 +26,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     		'password'=>'required|min:6|confirmed',
     		'password_confirmation'=>'required'
     	);
+
+
 	/**
 	 * Get the unique identifier for the user.
 	 *

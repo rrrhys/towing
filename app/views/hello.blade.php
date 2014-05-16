@@ -29,15 +29,7 @@
 			<div class="panel-heading">Sign in</div>
 			<div class="panel-body">
 				<span class="login_validation_error"></span>
-					{{Form::open()}}
-					{{Form::label('email')}}
-					{{Form::email('email', '',['id'=>'front_email', 'placeholder'=>'Email Address','class'=>'form-control'])}}
-					{{Form::label('password')}}
-					{{Form::password('password', ['id'=>'front_password', 'placeholder'=>'Password','class'=>'form-control'])}}
-<p style='text-align: center; padding-top: 10px;'>
-
-					<a class="btn btn-lgr btn-min-size btn-default" id='front_page_login_box' role="button">Sign in</a>
-					{{Form::close()}}
+					@include('users.partials.signin')
 			</div>
 		</div>
 	</div>

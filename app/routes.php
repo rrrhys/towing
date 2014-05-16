@@ -29,6 +29,7 @@ Route::get('signout', array('as'=>'signout', 'uses' => 'SessionsController@destr
 Route::post('/users/tokens', 			array('before'=>'auth.is_user','uses'=>'UsersController@listTokens'));
 Route::post('/users/deactivate_token', 	array('before'=>'auth.is_user','uses'=>'UsersController@deactivateToken'));
 
+Route::get('/users/verify_email/{token}', 	array('uses'=>'UsersController@verifyEmail'));
 
 //is corporate authentication
 Route::post('/users/add_child', 		array('before'=>'auth.is_corporate','uses'=>'UsersController@corpAddChildUser'));

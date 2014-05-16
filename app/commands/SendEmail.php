@@ -28,6 +28,14 @@ class SendEmail {
 					'subject' => "You won a job!"
         			);
         	break;
+        	case("emails.WelcomePleaseVerifyEmail"):
+        		$recipient = User::find($data['recipient_id']);
+        		$emailBodyData = array(
+					'recipient' => $recipient,
+					'verifyToken'=>$recipient->email_verify_token,
+					'subject' => "Welcome! Please verify your email."
+        			);
+        	break;
         	case("emails.YourJobFinishedWithBids"):
         		$job = Job::find($data['job_id']);
         		$jobLink = URL::route('job', array($job->id));

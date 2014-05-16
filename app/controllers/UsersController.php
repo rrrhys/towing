@@ -81,6 +81,16 @@ public function __construct() {
 		return View::make('users.create-lister')->with('user',$user)->with('terms',$terms);
 	
 	}
+	public function verifyEmail($token){
+		$user = User::where('email_verify_token','=',$token)->first();
+
+		if($user){
+			$user->email_verified = true;
+			$user->save();
+			Session::flash('success', "Email address was verified! Please sign in.");
+			return Redirect::route('signin');
+		}
+	}
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -127,7 +137,10 @@ public function __construct() {
 		}
 		$user->save();
 		
-		
+		     Queue::push('SendEmail',array(
+            'recipient_id'=>$user->id,
+            'email'=>'emails.WelcomePleaseVerifyEmail'));
+
 		return $user->toJson();
 	}
 

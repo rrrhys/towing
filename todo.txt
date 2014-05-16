@@ -1,2 +1,9 @@
 todo
 relist
+
+codeception
+
+play with gmaps and get them working
+
+change jobs.my to sidebar style
+finish sidebar style in my profile

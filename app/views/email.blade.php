@@ -43,7 +43,7 @@ h2 {
 </tr>
 <tr>
 	<td style="width: 10%;height:100%;" class="gray"></td>
-	<td style="width: 600px;margin-top: 40px; margin-bottom: 40px;margin-left: 20px;border: 1px solid #cccccc"> @yield('content')</td>
+	<td style="width: 600px;margin-top: 40px; margin-bottom: 40px;margin-left: 20px;border: 1px solid #cccccc"> @yield('content')<br></td>
 	<td style="width: 10%;" class="gray"></td>
 </tr>
 <tr class="gray">

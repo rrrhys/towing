@@ -171,3 +171,9 @@ h4 .btn-suncorp {
 .validation_message::before {
 	content: "*";
 }
+
+.list-group-item.heading {
+	padding-left: 5px;
+	font-weight: bold;
+	background-color: #eee;
+}
