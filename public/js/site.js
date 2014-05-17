@@ -29,4 +29,9 @@ $(".clickableRow").click(function(){
 	window.document.location = $(this).attr('href');
 })
 
+$(".list-group-item").click(function(){
+	$(this).parent().children(".list-group-item").removeClass('active');
+	$(this).addClass('active');
+})
+
 });

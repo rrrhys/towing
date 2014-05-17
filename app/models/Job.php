@@ -24,6 +24,16 @@ class Job extends \Eloquent {
         return $query->where('finishes_at','<',Carbon::now()->toDateTimeString());
     }
 
+    public function scopeNotawarded($query){
+
+        return $query->where('awarded_at',null);
+    }
+
+    public function scopeAwarded($query){
+
+        return $query->whereRaw('awarded_at is not null');
+    }
+
     public function scopeNotnotified($query){
 
         return $query->where('finished_notification_sent_at','=',null);

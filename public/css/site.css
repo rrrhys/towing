@@ -177,3 +177,7 @@ h4 .btn-suncorp {
 	font-weight: bold;
 	background-color: #eee;
 }
+
+.badge.badge-important {
+	background-color: #cc0000;
+}
