@@ -30,6 +30,7 @@ $(".clickableRow").click(function(){
 })
 
 $(".list-group-item").click(function(){
+	$(".spinner").show();
 	$(this).parent().children(".list-group-item").removeClass('active');
 	$(this).addClass('active');
 })

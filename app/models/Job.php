@@ -1,17 +1,12 @@
 <?php
 use Carbon\Carbon;
-use Laracasts\Presenter\PresentableTrait;
 class Job extends \Eloquent {
-
-    use PresentableTrait;
-
-    protected $presenter = 'JobPresenter';
 
     
 	protected $table = "jobs";
 	protected $softDelete = true;
 	protected $hidden = [];
-    protected $fillable = ['job_type_id','job_number','vehicle_make','vehicle_model','pickup_postcode','dropoff_postcode','pickup_address_id','dropoff_address_id','started_at','finishes_at','pickup_at','dropoff_at'];
+    protected $fillable = ['user_id','job_type_id','job_number','vehicle_make','vehicle_model','pickup_postcode','dropoff_postcode','pickup_address_id','dropoff_address_id','started_at','finishes_at','pickup_at','dropoff_at'];
     protected $appends = array('finished','lowest_bid');
 
     public function scopeRunning($query){
@@ -34,6 +29,15 @@ class Job extends \Eloquent {
         return $query->whereRaw('awarded_at is not null');
     }
 
+    public function scopeHasbids($query){
+
+        return $query->whereRaw('current_bid is not null');
+    }
+
+    public function scopeHasnobids($query){
+
+        return $query->whereRaw('current_bid is null');
+    }
     public function scopeNotnotified($query){
 
         return $query->where('finished_notification_sent_at','=',null);
@@ -75,6 +79,7 @@ class Job extends \Eloquent {
     }
     public function AwardToLowestBidder(){
         $this->awarded_at = Carbon::now();
+        $this->awarded_to = $this->lowest_bid->owner->id;
         $this->save();
 
         //fire off an email about it. 
@@ -103,6 +108,7 @@ class Job extends \Eloquent {
             }
             else{
                 $this->current_bid =$lowestCurrentBid->amount;
+                $this->current_bid_owner_id = $lowestCurrentBid->owner->id;
                 $this->save(); 
                 $return_value['messages'][] = "The bid was saved. You are the current highest bidder.";     
                 $return_value['result'] = true;                 
@@ -115,5 +121,25 @@ class Job extends \Eloquent {
 
 
     }
+
+    public function getTimeRemainingAttribute(){
+
+        if($this->finishes_at < Carbon::now()){
+            return "Finished";
+        }
+        $diff = $this->finishes_at->diff(Carbon::now());
+
+        $outString = "";
+        if($diff->d > 0){
+            $outString .= "{$diff->d}d {$diff->h}h";
+        }
+        else
+        {
+            $outString .= "{$diff->h}h {$diff->i}m";
+        }
+        $outString .= " (" . $this->finishes_at->addHours(10)->format('l g.ia'). ")";
+        return $outString;
+    }
+
 
 }

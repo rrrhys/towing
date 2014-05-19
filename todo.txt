@@ -6,7 +6,7 @@ codeception
 play with gmaps and get them working
 
 XXXXchange jobs.my to sidebar style
-filter jobs by sidebar choice jobs.my
+XXXXfilter jobs by sidebar choice jobs.my
 finish sidebar style in my profile
 nag message to get verified
 paging

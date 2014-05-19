@@ -91,6 +91,16 @@ public function __construct() {
 			return Redirect::route('signin');
 		}
 	}
+
+	public function resendVerifyEmail(){
+			$user = Auth::user();
+		     Queue::push('SendEmail',array(
+            'recipient_id'=>$user->id,
+            'email'=>'emails.WelcomePleaseVerifyEmail'));		
+		     Session::flash('success','Please check your email account for the verification email.');
+		     return Redirect::to('/');
+
+	}
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -141,7 +151,9 @@ public function __construct() {
             'recipient_id'=>$user->id,
             'email'=>'emails.WelcomePleaseVerifyEmail'));
 
-		return $user->toJson();
+	
+		     Session::flash('success', 'Your account was created. Please login to continue.');
+		     return Redirect::route('/');
 	}
 
 	/**

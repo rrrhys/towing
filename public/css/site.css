@@ -28,12 +28,19 @@ h4 {
 form {
 	position:relative; /*Allow popovers in place.*/
 }
+.white_out {
+	 background: rgba(255, 255, 255, 0.8);
+	 position:absolute;top:0;left:0;width:100%;height:100%;z-index:10001;
+	 text-align: center;
+	 color: #ccc;
+	 padding-top: 80px;
+}
 .grayed_out {
 	 background: rgba(0, 111, 102, 0.8);
 	 position:absolute;top:0;left:0;width:100%;height:100%;z-index:10001;
 	 text-align: center;
 	 color: #ccc;
-	 padding-top: 30px;
+	 padding-top: 80px;
 }
 .grayed_out a {
 	color: #fff;

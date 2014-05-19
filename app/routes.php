@@ -29,6 +29,7 @@ Route::get('signout', array('as'=>'signout', 'uses' => 'SessionsController@destr
 Route::post('/users/tokens', 			array('before'=>'auth.is_user','uses'=>'UsersController@listTokens'));
 Route::post('/users/deactivate_token', 	array('before'=>'auth.is_user','uses'=>'UsersController@deactivateToken'));
 
+Route::get('/users/resend_verify_email', 	array('as'=>'user.resend_verify','before'=>'auth.is_user','uses'=>'UsersController@resendVerifyEmail'));
 Route::get('/users/verify_email/{token}', 	array('uses'=>'UsersController@verifyEmail'));
 
 //is corporate authentication
@@ -53,6 +54,13 @@ Route::get('/jobs/browse', array('as'=>'jobs.browse', 'uses'=>'JobsController@br
 
 //for listers only.
 Route::get('/jobs/my', array('as'=>'jobs.my','before'=>'auth.is_lister', 'uses'=>'JobsController@my'));
+Route::get('/jobs/to/approve', array('as'=>'jobs.toApprove','before'=>'auth.is_lister', 'uses'=>'JobsController@toApprove'));
+Route::get('/jobs/to/relist', array('as'=>'jobs.toRelist','before'=>'auth.is_lister', 'uses'=>'JobsController@toRelist'));
+Route::get('/jobs/in/progress', array('as'=>'jobs.inProgress','before'=>'auth.is_lister', 'uses'=>'JobsController@inProgress'));
+Route::get('/jobs/bidding', array('as'=>'jobs.bidding','before'=>'auth.is_lister', 'uses'=>'JobsController@bidding'));
+Route::get('/jobs/won', array('as'=>'jobs.won','before'=>'auth.is_lister', 'uses'=>'JobsController@won'));
+Route::get('/jobs/lost', array('as'=>'jobs.lost','before'=>'auth.is_lister', 'uses'=>'JobsController@lost'));
+Route::get('/jobs/won/in/progress', array('as'=>'jobs.wonInProgress','before'=>'auth.is_lister', 'uses'=>'JobsController@wonInProgress'));
 Route::get('/jobs/my_corporate', array('before'=>'auth.is_lister', 'uses'=>'JobsController@myCorporate'));
 
 Route::get('/jobs/create', array('before'=>'auth.is_lister', 'as'=>'jobs.create', 'uses'=>'JobsController@create'));

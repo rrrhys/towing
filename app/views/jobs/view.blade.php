@@ -86,7 +86,7 @@ This job has finished.
 @if(!Auth::check())
 	<div class='grayed_out' style='padding-top: 80px;'>You need to be signed in to place a bid. <a href="{{URL::route('signin')}}">Sign in</a></div>
 @endif
-@if(!Auth::user()->email_verified())
+@if(!Auth::user()->email_verified)
 	<div class='grayed_out' style='padding-top: 80px;'>You need to verify your email to place a bid. <a href="{{URL::route('user.resend_verify')}}">Resend verify email</a></div>
 @endif
 {{Form::label('amount')}}
@@ -122,7 +122,6 @@ This job has finished.
 </table>
 
 
-<div id="map-canvas"/>
 
 @if($user && $user->is_tower)
 	<a href="{{URL::route('bids.create',array($job->id))}}" class='btn btn-primary'>Place Bid</a>
@@ -153,4 +152,5 @@ This job has finished.
   </div>
 </div>
 
+<div id="map-canvas"/>
 @stop

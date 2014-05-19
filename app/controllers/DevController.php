@@ -57,7 +57,7 @@ class DevController extends \BaseController {
             $user_id = rand(1, count(User::all()));
             $user = User::find($user_id);
             $job = Job::create([
-                'user_id' => rand(1,3) == 1 ? 2 : $user_id, /*Make sure rrrhys gets some */
+                'user_id' => $user_id, /*Make sure rrrhys gets some */
                 'top_user_id'=> $user->parent_id,
                 'job_type_id'=> rand(1,count($job_types)),
                 'job_number'=> rand(10000,99999),

@@ -31,6 +31,7 @@ User information: {{$user->username}}
  		</div>
 
  		<div class='tab-content'>
+ 			
 	 		<div class='tab-pane' id='contact-details'>
 		 		<div class="panel panel-default">
 		 			<div class="panel-heading">

@@ -62,16 +62,117 @@ class JobsController extends \BaseController {
 			return Response::make("Couldn't find that job.",404);
 		}
 	}
+	public function toRelist($sort_column="finishes_at", $sort_direction="asc"){
+		//return this users jobs.
+		$user = Auth::User();
+		if(Request::ajax()){
+			return $user->jobs()->finished()->hasnobids()->toJson();
+		}
+		else{
+			$job_heading = "Jobs to be relisted/deleted";
+			$job_counts = $this->_get_job_counts($user);
+			return View::make('jobs.my')->with(array(
+				'user'=>$user,
+				'active'=>'toRelist',
+				'job_counts'=>$job_counts,
+				'job_heading'=>$job_heading,
+				'jobs'=>$user->jobs()->finished()->hasnobids()->paginate(15)
+				));
+		}
+	}
+	public function toApprove($sort_column="finishes_at", $sort_direction="asc"){
+		//return this users jobs.
+		$user = Auth::User();
+		if(Request::ajax()){
+			return $user->jobs()->finished()->hasbids()->notawarded()->toJson();
+		}
+		else{
+			$job_heading = "Jobs to be approved";
+			$job_counts = $this->_get_job_counts($user);
+			return View::make('jobs.my')->with(array(
+				'user'=>$user,
+				'active'=>'toApprove',
+				'job_counts'=>$job_counts,
+				'job_heading'=>$job_heading,
+				'jobs'=>$user->jobs()->finished()->hasbids()->notawarded()->paginate(15)
+				));
+		}
+	}
+	public function inProgress($sort_column="finishes_at", $sort_direction="asc"){
+		//return this users jobs.
+		$user = Auth::User();
+		if(Request::ajax()){
+			return $user->jobs()->finished()->awarded()->toJson();
+		}
+		else{
+			$job_heading = "Jobs in progress";
+			$job_counts = $this->_get_job_counts($user);
+			return View::make('jobs.my')->with(array(
+				'user'=>$user,
+				'active'=>'inProgress',
+				'job_counts'=>$job_counts,
+				'job_heading'=>$job_heading,
+				'jobs'=>$user->jobs()->finished()->awarded()->paginate(15)
+				));
+		}
+	}
 	public function my($sort_column="finishes_at", $sort_direction="asc"){
 		//return this users jobs.
 		$user = Auth::User();
 		if(Request::ajax()){
-			return $user->jobs->orderBy($sort_column,$sort_direction)->toJson();
+			return $user->jobs()->running()->toJson();
 		}
 		else{
-			return View::make('jobs.my')->with('user',$user);
+			$job_heading = "My Active jobs";
+			$job_counts = $this->_get_job_counts($user);
+			return View::make('jobs.my')->with(array(
+				'user'=>$user,
+				'active'=>'my',
+				'job_counts'=>$job_counts,
+				'job_heading'=>$job_heading,
+				'jobs'=>$user->jobs()->running()->paginate(15)
+				));
 		}
 	}
+
+	public function won($sort_column="finishes_at", $sort_direction="asc"){
+		//return this users jobs.
+		$user = Auth::User();
+		if(Request::ajax()){
+			return $user->jobs_bid_on()->finished()->awarded()->toJson();
+		}
+		else{
+			$job_heading = "Jobs in progress";
+			$job_counts = $this->_get_job_counts($user);
+			return View::make('jobs.my')->with(array(
+				'user'=>$user,
+				'active'=>'inProgress',
+				'job_counts'=>$job_counts,
+				'job_heading'=>$job_heading,
+				'jobs'=>$user->jobs()->finished()->awarded()->paginate(15)
+				));
+		}
+	}
+
+	public function bidding($sort_column="finishes_at", $sort_direction="asc"){
+		//return this users jobs.
+		$user = Auth::User();
+		if(Request::ajax()){
+			return $user->jobs_bid_on()->toJson();
+		}
+		else{
+			$job_heading = "Jobs I've bid on";
+			$job_counts = $this->_get_job_counts($user);
+			return View::make('jobs.my')->with(array(
+				'user'=>$user,
+				'active'=>'inProgress',
+				'job_counts'=>$job_counts,
+				'job_heading'=>$job_heading,
+				'jobs'=>$user->jobs_bid_on()->groupby('jobs.id')->paginate(15)
+				));
+		}
+	}
+
 
 	public function browse($sort_column="finishes_at", $sort_direction="asc"){
 		$jobs = Job::running()->orderBy($sort_column)->get();
@@ -156,48 +257,14 @@ class JobsController extends \BaseController {
 
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
+	private function _get_job_counts($user){
+		$obj = new stdClass;
+		$obj->active = $user->jobs()->running()->count();
+		$obj->inProgress = $user->jobs()->finished()->awarded()->count();
+		$obj->toRelist = $user->jobs()->finished()->hasnobids()->count();
+		$obj->toApprove = $user->jobs()->finished()->notawarded()->hasbids()->count();
+		return $obj;
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
 
 }
