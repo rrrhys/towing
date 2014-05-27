@@ -126,7 +126,7 @@ Job: <strong>{{$job->pickup_address_1}} to {{$job->dropoff_address_1}}</strong>
 @if(!Auth::check())
 	<div class='grayed_out' style='padding-top: 80px;'>You need to be signed in to place a bid. <a href="{{URL::route('signin')}}">Sign in</a></div>
 @endif
-@if(!Auth::user()->email_verified)
+@if(Auth::user() && !Auth::user()->email_verified)
 	<div class='grayed_out' style='padding-top: 80px;'>You need to verify your email to place a bid. <a href="{{URL::route('user.resend_verify')}}">Resend verify email</a></div>
 @endif
 {{Form::label('amount')}}
