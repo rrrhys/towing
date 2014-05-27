@@ -12,7 +12,7 @@
 @stop
 @section('content')
 
-
+@if(!Auth::user())
 <div class="row">
 	<div class="col-md-6">
 		<div class="panel panel-info suncorp">
@@ -34,6 +34,7 @@
 		</div>
 	</div>
  </div>
+ @endif
  <div class="row">
  	<div class='col-md-12'>
 	 	<div class='panel panel-info suncorp'>

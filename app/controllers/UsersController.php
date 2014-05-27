@@ -87,7 +87,14 @@ public function __construct() {
 		if($user){
 			$user->email_verified = true;
 			$user->save();
-			Session::flash('success', "Email address was verified! Please sign in.");
+			$logged_in_user = Auth::user();
+			if(!$logged_in_user){
+				Session::flash('success', "Email address was verified! Please sign in.");
+			}
+			else{
+				Session::flash('success', "Email address was verified! You can now bid and list jobs.");
+			}
+			
 			return Redirect::route('signin');
 		}
 	}
@@ -98,7 +105,7 @@ public function __construct() {
             'recipient_id'=>$user->id,
             'email'=>'emails.WelcomePleaseVerifyEmail'));		
 		     Session::flash('success','Please check your email account for the verification email.');
-		     return Redirect::to('/');
+		     return Redirect::back();
 
 	}
 	/**

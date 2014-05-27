@@ -31,9 +31,24 @@ class JobsTableSeeder extends Seeder {
             ['Subaru','Forester'],
             ['Toyota','Corolla'],
             ['Mazda','3']);
+
+        $addresses = array(
+                ['74 Elvy St','Bargo NSW'],
+                ['24 Bargo Rd','Bargo NSW'],
+                ['1 High Street','Penrith NSW'],
+                ['George Street','Sydney NSW'],
+                ['Silverwater Road','Silverwater NSW'],
+                ['Joseph Street','Punchbowl NSW'],
+                ['66 Sunrise Road','Yerrinbool NSW'],
+                ['7 Chablis Place','Eschol PARK NSW'],
+                ['22 Power Close','Eagle Vale NSW']
+            );
+
         foreach(range(1, 50) as $index)
         {
             $car_type = $car_types[rand(0, count($car_types) - 1)];
+            $from_address =  $addresses[rand(0, count($addresses) - 1)];
+            $to_address =  $addresses[rand(0, count($addresses) - 1)];
             $pickup = rand(0,1);
             $user_id = rand(1, count(User::all()));
             $user = User::find($user_id);
@@ -44,10 +59,10 @@ class JobsTableSeeder extends Seeder {
                 'job_number'=> rand(10000,99999),
                 'vehicle_make'=> $car_type[0],
                 'vehicle_model'=> $car_type[1],
-                'pickup_postcode'=> rand(2000, 2999),
-                'dropoff_postcode'=> rand(2000,2999),
-                'pickup_address_id'=> -1,
-                'dropoff_address_id'=> -1,
+                'pickup_address_1'=> $from_address[0],
+                'pickup_address_2'=> $from_address[1],
+                'dropoff_address_1'=> $to_address[0],
+                'dropoff_address_2'=> $to_address[1],
                 'started_at'=> $faker->dateTimeBetween($startDate = '-5 days', $endDate = '-36 hours') ,
                 'finishes_at'=> $faker->dateTimeBetween($startDate = '-36 hours', $endDate = '+3 days') ,
                 'pickup_at'=> $pickup ? $faker->dateTimeBetween($startDate = '+1 day', $endDate = '+5 days') : null,

@@ -8,7 +8,7 @@ My Jobs
 
  <div class="row">
  	@include('jobs.partial.sidebar')->with(array('active'=>$active,'job_counts'=>$job_counts))
- 	<div class='col-md-10'>
+ 	<div class='col-md-9'>
  		<div class='tab-content'>
  			<div class='white_out spinner' style='display:none;'><img src='/img/spin.gif'></div>
 		 	<div class='tab-pane active' id='my-active'>

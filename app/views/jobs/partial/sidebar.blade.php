@@ -1,4 +1,4 @@
- 	<div class="col-md-2">
+ 	<div class="col-md-3">
 	 	<div class="list-group">
 	 	<a href="#" class='list-group-item heading'>Listing</a>	
 		  <a href="{{URL::route('jobs.my')}}" class='list-group-item {{$active == 'my' ? "active" : ""}}'>My Active listings <span class='badge'>{{$job_counts->active == 0 ? "": $job_counts->active}}</span></a>

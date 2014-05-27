@@ -20,10 +20,10 @@ class CreateJobsTable extends Migration {
 			$table->string('job_number');
 			$table->string('vehicle_make');
 			$table->string('vehicle_model');
-			$table->integer('pickup_postcode');
-			$table->integer('dropoff_postcode');
-			$table->integer('pickup_address_id')->nullable();
-			$table->integer('dropoff_address_id')->nullable();
+			$table->string('pickup_address_1');
+			$table->string('pickup_address_2');
+			$table->string('dropoff_address_1');
+			$table->string('dropoff_address_2');
 			$table->timestamp('started_at');
 			$table->timestamp('finishes_at');
 			$table->timestamp('pickup_at')->nullable();
