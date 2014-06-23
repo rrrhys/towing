@@ -2,12 +2,12 @@ todo
 relist
 
 codeception
-
-play with gmaps and get them working
-
-XXXXchange jobs.my to sidebar style
-XXXXfilter jobs by sidebar choice jobs.my
 finish sidebar style in my profile
 nag message to get verified
 paging
 Add hide job option to relist page and jobs in progress page.
+
+one seeded user should be verified
+all emails on DO account to go to a mailgun or similar account
+job distance to cache on setup
+map image to cache - look into that.

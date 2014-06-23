@@ -52,6 +52,20 @@ class DevController extends \BaseController {
             ['Subaru','Forester'],
             ['Toyota','Corolla'],
             ['Mazda','3']);
+
+        $addresses_from = array();
+        $addresses_to = array();
+        for($i = 0; $i < 100; $i++){
+            $addresses_from[] = [$i . " Elvy Street", "BARGO NSW 2574"];
+            $addresses_from[] = [$i . " Queen Street", "CAMPBELLTOWN NSW 2560"];
+            $addresses_to[] = [$i . " George Street", "SYDNEY NSW 2000"];
+            $addresses_to[] = [$i . " Silverwater Rd", "SILVERWATER NSW 2144"];
+        }
+            $address_from = $addresses_from[rand(0, count($addresses_from) - 1)];
+            $address_to = $addresses_to[rand(0, count($addresses_to) - 1)];
+
+            echo $address_from[0];
+
             $car_type = $car_types[rand(0, count($car_types) - 1)];
             $pickup = rand(0,1);
             $user_id = rand(1, count(User::all()));
@@ -63,10 +77,10 @@ class DevController extends \BaseController {
                 'job_number'=> rand(10000,99999),
                 'vehicle_make'=> $car_type[0],
                 'vehicle_model'=> $car_type[1],
-                'pickup_postcode'=> rand(2000, 2999),
-                'dropoff_postcode'=> rand(2000,2999),
-                'pickup_address_id'=> -1,
-                'dropoff_address_id'=> -1,
+                'pickup_address_1'=> $address_from[0],
+                'pickup_address_2'=> $address_from[1],
+                'dropoff_address_1'=> $address_to[0],
+                'dropoff_address_2'=> $address_to[1],
                 'started_at'=> $faker->dateTimeBetween($startDate = '-5 days', $endDate = '-36 hours') ,
                 'finishes_at'=> $faker->dateTimeBetween($startDate = '-36 hours', $endDate = '+3 days') ,
                 'pickup_at'=> $pickup ? $faker->dateTimeBetween($startDate = '+1 day', $endDate = '+5 days') : null,

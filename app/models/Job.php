@@ -6,7 +6,7 @@ class Job extends \Eloquent {
 	protected $table = "jobs";
 	protected $softDelete = true;
 	protected $hidden = [];
-    protected $fillable = ['user_id','job_type_id','job_number','vehicle_make','vehicle_model','pickup_postcode','dropoff_postcode','pickup_address_id','dropoff_address_id','started_at','finishes_at','pickup_at','dropoff_at'];
+    protected $fillable = ['user_id','job_type_id','job_number','vehicle_make','vehicle_model','pickup_postcode','dropoff_postcode','pickup_address_1','pickup_address_2','dropoff_address_1','dropoff_address_2','started_at','finishes_at','pickup_at','dropoff_at'];
     protected $appends = array('finished','lowest_bid');
 
     public function scopeRunning($query){
